@@ -1,0 +1,262 @@
+@use "../util/" as ut;
+$higherWidth: 480px;
+$lowerWidth: 300px;
+
+.textChanger {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    // color: #333;
+    padding-bottom: 7px;
+    font-size: 5rem;
+    font-weight: 100;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: $higherWidth;
+    text-align: center;
+    margin: 0;
+    // border: 1px solid white;
+
+    @include ut.breakpoint(medium) {
+      width: $lowerWidth;
+      line-height: 1.5;
+      font-size: 3rem;
+    }
+  }
+
+  h1 span {
+    font-size: 40px;
+    margin-left: 40px;
+  }
+
+  .message {
+    color: rgb(48, 48, 48);
+    display: block;
+    font-weight: bold;
+    overflow: hidden;
+    position: absolute;
+    padding-left: 0.5rem;
+    top: 0.2rem;
+    // left: 270px;
+    animation: openClose 10s ease-in-out infinite;
+    @include ut.breakpoint(medium) {
+      animation: openCloseMobile 10s ease-in-out infinite;
+    }
+    // border: 1px solid white;
+  }
+  .word2 {
+    margin-bottom: 5px;
+
+    @include ut.breakpoint(medium) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .word1,
+  .word2,
+  .word3 {
+    font-family: animeace2;
+    // border: 1px solid white;
+  }
+  .scroll {
+    font-size: 1rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(48, 48, 48);
+    // color: white;
+    // text-shadow: 2px 2px 0px rgb(255, 40, 80), -1px -1px 0 rgb(255, 40, 80),
+    //   1px -1px 0 rgb(255, 40, 80), -1px 1px 0 rgb(255, 40, 80),
+    //   1px 1px 0 rgb(255, 40, 80);
+  }
+
+  @keyframes openClose {
+    0% {
+      top: 0.2rem;
+      width: 0;
+    }
+    5% {
+      width: 0;
+    }
+    15% {
+      width: $higherWidth;
+    }
+    30% {
+      top: 0.2rem;
+      width: $higherWidth;
+    }
+    33% {
+      top: 0.2rem;
+      width: 0;
+    }
+    //!
+    35% {
+      top: 0.2rem;
+      width: 0;
+    }
+    38% {
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    48% {
+      width: $higherWidth;
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    62% {
+      width: $higherWidth;
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    66% {
+      top: -5.5rem;
+      width: 0;
+      text-indent: 0;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    //!
+    71% {
+      top: -11rem;
+      width: 0;
+      text-indent: 5px;
+    }
+    86% {
+      top: -11rem;
+      width: $higherWidth;
+    }
+    95% {
+      top: -11rem;
+      width: $higherWidth;
+    }
+    98% {
+      top: -11rem;
+      width: 0;
+      text-indent: 5px;
+    }
+    100% {
+      top: 0;
+      width: 0;
+      text-indent: 0;
+    }
+  }
+  @keyframes openCloseMobile {
+    0% {
+      top: 0.2rem;
+      width: 0;
+    }
+    5% {
+      width: 0;
+    }
+    15% {
+      width: $lowerWidth;
+    }
+    30% {
+      top: 0.2rem;
+      width: $lowerWidth;
+    }
+    33% {
+      top: 0.2rem;
+      width: 0;
+    }
+    35% {
+      top: 0.2rem;
+      width: 0;
+    }
+    38% {
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    48% {
+      width: $lowerWidth;
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    62% {
+      width: $lowerWidth;
+      top: -5.5rem;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    66% {
+      top: -5.5rem;
+      width: 0;
+      text-indent: 0;
+      @include ut.breakpoint(xLarge) {
+        top: -5.6rem;
+      }
+      @include ut.breakpoint(larger) {
+        top: -6rem;
+      }
+    }
+    71% {
+      top: -11rem;
+      width: 0;
+      text-indent: 5px;
+    }
+    86% {
+      top: -11rem;
+      width: $lowerWidth;
+    }
+    95% {
+      top: -11rem;
+      width: $lowerWidth;
+    }
+    98% {
+      top: -11rem;
+      width: 0;
+      text-indent: 5px;
+    }
+    100% {
+      top: 0;
+      width: 0;
+      text-indent: 0;
+    }
+  }
+}
