@@ -1,0 +1,23 @@
+.videoScreen_inner{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    height: 100vh;
+    padding: 10px;
+}
+
+.videoScreen_video{
+    border: 2px solid red;
+    width: 70%;
+}
+
+.chatBot{
+    border: 2px solid red;
+    width: 30%;
+}
+
+
+.video_current{
+    padding: 5px;
+    margin: 5px;
+}

@@ -12,14 +12,16 @@ import {
 import LandingPage from "./screen/LandingPage";
 import Register from "./screen/util/Register";
 import HomeScreen from "./screen/HomeScreen";
+import VideoScreen from "./screen/VideoScreen";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<App />} />
       <Route index={true} path="" element={<LandingPage />} />
-      <Route index={true} path="/home" element={<HomeScreen />} />
-      <Route index={true} path="/register" element={<Register />} />
+      <Route  path="/home" element={<HomeScreen />} />
+      <Route path="/register" element={<Register />} />
+      <Route  path="/video" element={<VideoScreen />} />
     </Route>
   )
 );

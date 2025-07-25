@@ -2,12 +2,14 @@
 @forward "util";
 
 body {
+  // background-color: rgb(48, 48, 48);
   background-color: rgb(255 255 251);
   font-family: animeace2;
 }
 
-h1 {
-  color: rgb(252, 252, 252);
+.homeScreen > h1 {
+  color: rgb(173, 125, 125);
+  text-align: end;
 }
 
 .app {
