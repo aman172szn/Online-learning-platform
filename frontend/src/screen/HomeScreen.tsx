@@ -1,7 +1,7 @@
 // import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import '../sass/Screen/homeScreen.scss'
+import '../sass/screens/homeScreen.scss'
 
 const HomeScreen = () => {
   return (

@@ -1,0 +1,14 @@
+.landingPage {
+  display: flex;
+  height: 100vh;
+}
+
+.landing__main {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding-left: 3rem;
+  margin-top: auto;
+  margin-bottom: 10%;
+}

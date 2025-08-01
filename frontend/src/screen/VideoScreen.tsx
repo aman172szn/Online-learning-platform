@@ -1,6 +1,6 @@
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import '../sass/Screen/videoScreen.scss'
+import '../sass/screens/videoScreen.scss'
 
 export default function VideoScreen(){
     return(

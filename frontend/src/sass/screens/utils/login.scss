@@ -1,0 +1,66 @@
+@use "../../global/headerPlate" as hp;
+.login {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 2px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
+  max-width: 850px;
+  width: 90%;
+  // margin: 10px auto;
+  padding: 20px;
+  padding-top: 30px;
+  height: 45%;
+  // margin-top: 30%;
+  > form {
+    height: 100%;
+  }
+}
+
+.landing__image {
+  background: url(/src/assets/1.jpg) no-repeat center;
+  box-shadow: 2px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  width: 70%;
+  border-radius: 10px;
+}
+
+.login__inner {
+  &__header {
+    &__login {
+      // font-size: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    &__topHeader {
+      font-size: hp.$headerTopSize;
+      font-weight: bold;
+      // padding-bottom: 15px;
+    }
+
+    &__bottomHeader {
+      font-style: italic;
+      font-size: hp.$headerBottomSize;
+      padding-bottom: 1.2rem;
+    }
+  }
+  &__form {
+    > form {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    &__login {
+      display: flex;
+      // gap: 5px;
+      flex-direction: column;
+      &__email,
+      &__password {
+        display: flex;
+        flex-direction: column;
+      }
+      &__registerLink {
+        font-size: 1rem;
+      }
+    }
+  }
+}

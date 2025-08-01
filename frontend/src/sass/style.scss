@@ -3,8 +3,8 @@
 
 body {
   // background-color: rgb(48, 48, 48);
+  font-family: cursive;
   background-color: rgb(255 255 251);
-  font-family: animeace2;
 }
 
 .homeScreen > h1 {
@@ -20,4 +20,14 @@ body {
 
 .content {
   padding: 16px;
+}
+
+form {
+  font-size: 2.2rem;
+}
+
+input {
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-family: cursive;
 }
