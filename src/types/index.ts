@@ -39,3 +39,16 @@ export interface ErrorResponse {
   error: string;
   statusCode: number;
 }
+
+// Search result type
+export interface SearchResult {
+  videos: Video[];
+  channels: Channel[];
+  totalResults: number;
+}
+// Pagination type
+export interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalResults: number;
+}
