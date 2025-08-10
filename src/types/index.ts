@@ -52,3 +52,8 @@ export interface Pagination {
   totalPages: number;
   totalResults: number;
 }
+// Video list type with pagination
+export interface VideoList {
+  videos: Video[];
+  pagination: Pagination;
+}
