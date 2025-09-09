@@ -11,6 +11,7 @@ const Login = () => {
   const searchParams = new URLSearchParams(search);
   const redirect = searchParams.get("redirect") || "/";
   const [formData, setFormData] = useState({
+    userName: "",
     userEmail: "",
     userPassword: "",
   });
@@ -44,9 +45,9 @@ const Login = () => {
               <label htmlFor="userName">Name</label>
               <input
                 // value={formData?.name}
-                value={formData?.userEmail}
+                value={formData?.userName}
                 type="text"
-                name="name"
+                name="userName"
                 required
                 placeholder="Enter name"
                 onChange={formControllerHandler}
