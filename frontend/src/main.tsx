@@ -14,6 +14,7 @@ import Register from "./screen/util/Register";
 import HomeScreen from "./screen/HomeScreen";
 import VideoScreen from "./screen/VideoScreen";
 import ProfileScreen from "./screen/ProfileScreen";
+import UploadScreen from "./screen/UploadScreen";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const route = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/video" element={<VideoScreen />} />
       <Route path="/profile" element={<ProfileScreen />} />
+      <Route path="/upload" element={<UploadScreen />} />
     </Route>
   )
 );

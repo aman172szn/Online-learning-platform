@@ -78,7 +78,7 @@ const Login = () => {
                 autoComplete="off"
               />
             </div>
-            <Button
+            {/* <Button
               // onClick={(event) => submitHandler(event)}
               className="formContainer__loginBtn"
               secondary
@@ -87,7 +87,10 @@ const Login = () => {
               // loading={isLoading}
             >
               Register
-            </Button>
+            </Button> */}
+            <div className="register__edit">
+              <div className="register__edit__button"> Upload Button </div>
+            </div>
             {/* {isLoading && <div>Getting User</div>} */}
             <div className="register__loginLink">
               Already have an account?

@@ -1,24 +1,51 @@
-.videoScreen_inner {
+.videoScreen {
   display: flex;
-  justify-content: space-around;
-  gap: 10px;
+  flex-direction: column;
   height: 100vh;
-  padding: 10px;
-}
 
-.videoScreen_video {
-  border: 2px solid red;
-  width: 70%;
-}
+  .video_current {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
 
-.chatBot {
-  border: 2px solid red;
-  width: 30%;
-}
+  .videoScreen_inner {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    padding: 10px;
 
-.video_current {
-  background-color: seashell;
-  //   margin:  0px;
-  padding: 10px 0px;
-  font-size: 2rem;
+    .videoScreen_video {
+      flex: 3;
+      // background: #000;
+      display: flex;
+      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .chatBot {
+      flex: 1;
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 10px;
+    }
+  }
 }
+// In your videoScreen.scss file
+
+// .videoScreen_inner {
+//   // Use flexbox to center the content
+//   display: flex;
+//   justify-content: space-around; // Or 'center' if you prefer
+//   align-items: flex-start;
+//   padding: 2rem;
+//   gap: 2rem;
+// }
+
+// .videoScreen_video {
+//   // Give the container a defined size and aspect ratio
+//   width: 60%; // Or any width you prefer
+//   aspect-ratio: 16 / 9; // This maintains a 16:9 video ratio automatically
+//   background-color: black; // Good for debugging to see the container
+// }
