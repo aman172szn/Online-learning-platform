@@ -3,18 +3,18 @@ const router = express.Router();
 import {
   registerUser,
   loginUser,
-  getUserProfile, // <-- Import new functions
+  logoutUser,
+  getUserProfile,
   updateUserProfile,
 } from "../controllers/userController.js";
-import { protect } from "../middleware/authmiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 router.post("/", registerUser);
 router.post("/login", loginUser);
-
-// Define the protected route for the user profile
+router.post("/logout", logoutUser);
 router
   .route("/profile")
-  .get(protect, getUserProfile) // GET request is protected
-  .put(protect, updateUserProfile); // PUT request is protected
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 
 export default router;

@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -25,6 +27,11 @@ app.get("/", (req, res) => {
 
 // Use the user routes
 app.use("/api/users", userRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/upload", uploadRoutes);
+
+const __dirname = path.resolve(); // <-- Add this line
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const PORT = process.env.PORT || 5000;
 
