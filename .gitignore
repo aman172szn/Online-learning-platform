@@ -1,0 +1,42 @@
+# =================================================
+# Root
+# =================================================
+# Dependencies for concurrently
+/node_modules
+/package-lock.json
+
+# Environment Variables
+.env
+
+# =================================================
+# Backend
+# =================================================
+# Backend Dependencies
+backend/node_modules/
+
+# Backend Environment Variables
+backend/.env
+
+# =================================================
+# Frontend
+# =================================================
+# Frontend Dependencies
+frontend/node_modules/
+
+# Frontend Build output
+frontend/dist/
+
+# Frontend Environment Variables
+frontend/.env
+
+# =================================================
+# General
+# =================================================
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Common OS and editor files
+.DS_Store
+.vscode/

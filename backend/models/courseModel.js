@@ -5,16 +5,17 @@ const courseSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User", // Establishes a relationship to the User model
+      ref: "User",
     },
     name: {
       type: String,
       required: true,
     },
-    details: {
+    semester: {
       type: String,
       required: true,
     },
+    // --- END CHANGE ---
     videoUrl: {
       type: String,
       required: true,
@@ -25,7 +26,7 @@ const courseSchema = mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      required: false, // Will be path to the image file
+      required: false,
     },
   },
   {

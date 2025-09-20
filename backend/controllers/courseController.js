@@ -31,14 +31,16 @@ const getCourseById = asyncHandler(async (req, res) => {
 // @route   POST /api/courses
 // @access  Private
 const createCourse = asyncHandler(async (req, res) => {
-  const { name, details, videoUrl, description } = req.body;
+  // Use 'name', 'semester', etc. to match the model and frontend
+  const { name, semester, videoUrl, description, thumbnail } = req.body;
 
   const course = new Course({
     name,
-    details,
+    semester, // <-- Use 'semester' here
     videoUrl,
     description,
-    user: req.user._id, // Link to the logged-in user
+    thumbnail,
+    user: req.user._id,
   });
 
   const createdCourse = await course.save();
