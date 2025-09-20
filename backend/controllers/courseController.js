@@ -7,7 +7,17 @@ import Course from "../models/courseModel.js";
 // @route   GET /api/courses
 // @access  Public
 const getCourses = asyncHandler(async (req, res) => {
-  const courses = await Course.find({});
+  let courses;
+
+  // Check if the logged-in user is a teacher
+  if (req.user.isTeacher) {
+    // If they are a teacher, find only the courses they created
+    courses = await Course.find({ user: req.user._id });
+  } else {
+    // If they are a student, find all courses
+    courses = await Course.find({});
+  }
+
   res.json(courses);
 });
 

@@ -15,6 +15,7 @@ import HomeScreen from "./screen/HomeScreen";
 import VideoScreen from "./screen/VideoScreen";
 import ProfileScreen from "./screen/ProfileScreen";
 import UploadScreen from "./screen/UploadScreen";
+import AdminScreen from "./screen/AdminScreen";
 
 // Toastify
 import { ToastContainer } from "react-toastify";
@@ -26,6 +27,8 @@ import { store } from "./store/store";
 
 // private route
 import PrivateRoute from "./components/PrivateRoute";
+import TeacherRoute from "./components/TeacherRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -38,8 +41,16 @@ const route = createBrowserRouter(
       <Route path="/home" element={<HomeScreen />} />
       <Route path="/video" element={<VideoScreen />} />
       <Route path="/profile" element={<ProfileScreen />} />
-      <Route path="/upload" element={<UploadScreen />} />
       {/* </Route> */}
+
+      {/* teacher route */}
+      <Route path="" element={<TeacherRoute />}>
+        <Route path="/upload" element={<UploadScreen />} />
+      </Route>
+      {/* admin route */}
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/users" element={<AdminScreen />} />
+      </Route>
     </Route>
   )
 );

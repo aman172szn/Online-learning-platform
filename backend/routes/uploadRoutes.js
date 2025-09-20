@@ -51,8 +51,7 @@
 
 import express from "express";
 import multer from "multer";
-import { protect } from "../middleware/authMiddleware.js";
-
+import { protect, teacher } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // Multer will still process the file in memory, but we won't send it anywhere
@@ -62,31 +61,43 @@ const upload = multer({ storage });
 // @route   POST /api/upload/image
 // @desc    MOCK endpoint for thumbnail upload
 // @access  Private
-router.post("/image", protect, upload.single("image"), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No image file uploaded" });
-  }
+router.post(
+  "/image",
+  protect,
+  teacher,
+  upload.single("image"),
+  async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file uploaded" });
+    }
 
-  // Instead of uploading, just send a success response with a fake URL
-  res.status(200).json({
-    message: "Mock image upload successful",
-    imageUrl: "/uploads/mock-image.jpg",
-  });
-});
+    // Instead of uploading, just send a success response with a fake URL
+    res.status(200).json({
+      message: "Mock image upload successful",
+      imageUrl: "/uploads/mock-image.jpg",
+    });
+  }
+);
 
 // @route   POST /api/upload/video
 // @desc    MOCK endpoint for video upload
 // @access  Private
-router.post("/video", protect, upload.single("video"), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No video file uploaded" });
-  }
+router.post(
+  "/video",
+  protect,
+  teacher,
+  upload.single("video"),
+  async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: "No video file uploaded" });
+    }
 
-  // Instead of uploading, just send a success response with a fake URL
-  res.status(200).json({
-    message: "Mock video upload successful",
-    videoUrl: "/uploads/mock-video.mp4",
-  });
-});
+    // Instead of uploading, just send a success response with a fake URL
+    res.status(200).json({
+      message: "Mock video upload successful",
+      videoUrl: "/uploads/mock-video.mp4",
+    });
+  }
+);
 
 export default router;

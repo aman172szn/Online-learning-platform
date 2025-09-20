@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 // Load environment variables
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/admin", adminRoutes);
 
 const __dirname = path.resolve(); // <-- Add this line
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

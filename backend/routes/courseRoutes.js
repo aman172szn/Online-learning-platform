@@ -1,17 +1,20 @@
 import express from "express";
-const router = express.Router();
 import {
   createCourse,
-  getCourses, // <-- Import new functions
+  getCourses,
   getCourseById,
 } from "../controllers/courseController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, teacher } from "../middleware/authMiddleware.js";
 
-// GET all courses, POST a new course
-router.route("/").get(getCourses).post(protect, createCourse);
-// GET a single course by its ID
-// UPDATE
-router.route("/:id").get(getCourseById);
-router.route("/").post(protect, createCourse);
+const router = express.Router();
+
+// This single block handles both GET and POST requests to the root '/'
+router
+  .route("/")
+  .get(protect, getCourses) // GET /api/courses (Protected for all logged-in users)
+  .post(protect, teacher, createCourse); // POST /api/courses (Protected for Teachers only)
+
+// This handles requests for a single course by its ID
+router.route("/:id").get(getCourseById); // GET /api/courses/:id (Public)
 
 export default router;

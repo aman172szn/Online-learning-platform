@@ -60,11 +60,13 @@ const HomeScreen = () => {
         <div className="homeScreen__user">
           <span>{userInfo ? userInfo.name : "User"}</span>, Welcome.
         </div>
-        <div className="upload">
-          <Link className="upload_button" to="/upload">
-            <div> Upload Button </div>
-          </Link>
-        </div>
+        {userInfo && userInfo.isTeacher && (
+          <div className="upload">
+            <Link className="upload_button" to="/upload">
+              <div> Upload Button </div>
+            </Link>
+          </div>
+        )}
         <div className="homeScreen__video">
           <h2 className="video__title">Video List</h2>
           <div className="video__div">

@@ -116,6 +116,15 @@ export default function Header() {
         </li>
 
         {/* --- CONDITIONAL RENDERING --- */}
+        {userInfo && userInfo.isAdmin && (
+          <li
+            className={isNavExpanded ? "navbar__item" : "navbar__item expanded"}
+          >
+            <Link to="/admin/users" className="navbar__item__link">
+              Admin
+            </Link>
+          </li>
+        )}
         {userInfo ? (
           // If user is logged in, show Profile and Logout links
           <>
@@ -130,7 +139,6 @@ export default function Header() {
                   style={{ display: "flex" }}
                 >
                   Profile
-                  {/* {userInfo.name} Display user's name */}
                 </div>
               </Link>
             </li>

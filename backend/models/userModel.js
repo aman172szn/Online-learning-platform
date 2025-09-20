@@ -16,6 +16,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // --- ADD THIS FIELD ---
+    isTeacher: {
+      type: Boolean,
+      required: true,
+      default: false, // By default, new users are students
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -1,0 +1,126 @@
+// --- Main Admin Screen Container ---
+.admin-screen {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  min-height: calc(100vh - 91px); // Adjust based on your header/footer height
+  //  min-height: ;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-family: "Comic Neue", cursive; // Font to match your theme
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #e0e0e0;
+  }
+}
+
+// --- User Table Styling ---
+.user-table {
+  width: 90%;
+  max-width: 1200px;
+  border-collapse: collapse;
+  background-color: #242424;
+  border-radius: 8px;
+  overflow: hidden; // To make border-radius work on table
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  font-family: cursive !important;
+
+  thead {
+    th {
+      background-color: #333;
+      padding: 1rem;
+      text-align: left;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  tbody {
+    tr {
+      font-family: cursive !important;
+
+      border-bottom: 1px solid #333;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      font-family: cursive !important;
+      padding: 1rem;
+      vertical-align: middle;
+      font-family: sans-serif; // Use a more readable font for data
+    }
+  }
+}
+
+// --- Button Styling ---
+.promote-btn {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #555;
+  }
+
+  &:disabled {
+    background-color: #222;
+    color: #666;
+    cursor: not-allowed;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-table {
+    border: none;
+    box-shadow: none;
+
+    // Hide the original table header
+    thead {
+      display: none;
+    }
+
+    // Turn each row into a card
+    tr {
+      display: block;
+      margin-bottom: 1.5rem;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+
+    // Turn each cell into a full-width block
+    td {
+      display: block;
+      text-align: right; // Align the data to the right
+      padding-left: 50%; // Make space for the label
+      position: relative;
+      border-bottom: 1px solid #333;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      // Create the label from the data-label attribute
+      &::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: left;
+      }
+    }
+  }
+}
