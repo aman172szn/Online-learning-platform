@@ -6,17 +6,26 @@ import Course from "../models/courseModel.js";
 // @desc    Fetch all courses
 // @route   GET /api/courses
 // @access  Public
+// @desc    Fetch courses based on user role and filters
+// @route   GET /api/courses
+// @access  Private
 const getCourses = asyncHandler(async (req, res) => {
-  let courses;
+  // Start with an empty filter object
+  const filter = {};
+
+  // If a semester is provided in the query string (e.g., /api/courses?semester=2), add it to the filter
+  if (req.query.semester) {
+    filter.semester = req.query.semester;
+  }
 
   // Check if the logged-in user is a teacher
   if (req.user.isTeacher) {
-    // If they are a teacher, find only the courses they created
-    courses = await Course.find({ user: req.user._id });
-  } else {
-    // If they are a student, find all courses
-    courses = await Course.find({});
+    // If they are a teacher, add a filter to only find their own courses
+    filter.user = req.user._id;
   }
+
+  // Use the final filter object to find courses
+  const courses = await Course.find(filter);
 
   res.json(courses);
 });

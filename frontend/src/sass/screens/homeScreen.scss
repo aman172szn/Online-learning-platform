@@ -37,9 +37,23 @@
   }
 }
 
+.video__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+}
 .video__title {
   margin-left: 20px;
   font-size: 1.5rem;
+}
+
+.filter-container > select {
+  background-color: rgb(14, 14, 14);
+  color: silver;
+  font-size: 1.1rem;
+  font-family: cursive;
+  border-radius: 10px;
 }
 
 .video__div {
@@ -48,12 +62,25 @@
   min-height: 300px;
 }
 .video__div1 {
+  // transition: all 0.5s;
   min-width: 90%;
   border-radius: 10px;
   background-color: rgb(14, 14, 14);
   box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
 }
 
+.__inner {
+  background-color: #131212;
+  box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  margin: 20px;
+  padding: 50px;
+  border-radius: 10px;
+  transition: all 0.8s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.95);
+  }
+}
 .video__list {
   border-radius: 10px;
   display: grid;
@@ -61,17 +88,16 @@
   gap: 20px;
   font-size: 1.2rem;
 }
-.__inner {
-  background-color: #131212;
-  box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
-  margin: 20px;
-  padding: 50px;
+.no-courses-message {
+  transition: all 0.5s;
+  padding: 20px;
+  height: fit-content;
+  font-size: 1.5rem;
   border-radius: 10px;
-  transition: all 1s;
-  &:hover {
-    cursor: pointer;
-    transform: scale(0.9);
-  }
+  background-color: rgb(14, 14, 14);
+  // box-shadow: #d8d8d8 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  text-decoration: overline;
+  color: rgb(236, 52, 52);
 }
 
 .upload {

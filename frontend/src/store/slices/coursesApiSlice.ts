@@ -5,10 +5,11 @@ const UPLOAD_URL = "/api/upload";
 export const coursesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCourses: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: COURSES_URL,
+        params, // This will turn { semester: '2' } into ?semester=2 in the URL
       }),
-      keepUnusedDataFor: 5, // Cache data for 5 seconds
+      keepUnusedDataFor: 5,
     }),
     createCourse: builder.mutation({
       query: (data) => ({
