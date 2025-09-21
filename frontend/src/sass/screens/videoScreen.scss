@@ -1,7 +1,9 @@
-.videoScreen {
+.videoScreen__container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  background-color: #131212;
+  color: silver;
+  min-height: calc(100vh - 91px); // Adjust based on your header/footer height
 
   .video_current {
     text-align: center;

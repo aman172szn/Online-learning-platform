@@ -1,11 +1,16 @@
 // import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import {
+//   useCreateCourseMutation,
+//   useUploadThumbnailMutation,
+//   useUploadVideoMutation,
+// } from "../store/slices/coursesApiSlice";
 // import Footer from "../components/Footer";
 // import Header from "../components/Header";
 // import "../sass/screens/uploadScreen.scss";
-// import { FaUpload, FaVideo } from "react-icons/fa"; // Added FaVideo icon
-// import { toast } from "react-toastify";
+// import { FaUpload, FaVideo } from "react-icons/fa";
 
-// // Helper function to format file size
 // const formatFileSize = (bytes) => {
 //   if (bytes === 0) return "0 Bytes";
 //   const k = 1024;
@@ -15,17 +20,21 @@
 // };
 
 // export default function UploadScreen() {
-//   // State for text inputs
-//   const [courseName, setCourseName] = useState("");
-//   const [courseSemester, setCourseSemester] = useState("");
+//   const [name, setName] = useState("");
+//   const [semester, setSemester] = useState("");
 //   const [description, setDescription] = useState("");
-
-//   // State for the files
 //   const [thumbnailFile, setThumbnailFile] = useState(null);
 //   const [thumbnailPreview, setThumbnailPreview] = useState("");
 //   const [videoFile, setVideoFile] = useState(null);
 
-//   // Handler for thumbnail file selection
+//   const navigate = useNavigate();
+
+//   const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
+//   const [uploadThumbnail, { isLoading: isUploadingThumb }] =
+//     useUploadThumbnailMutation();
+//   const [uploadVideo, { isLoading: isUploadingVideo }] =
+//     useUploadVideoMutation();
+
 //   const thumbnailChangeHandler = (e) => {
 //     const file = e.target.files[0];
 //     if (file) {
@@ -34,7 +43,6 @@
 //     }
 //   };
 
-//   // Handler for video file selection
 //   const videoChangeHandler = (e) => {
 //     const file = e.target.files[0];
 //     if (file) {
@@ -48,15 +56,34 @@
 //       toast.error("Please select both a thumbnail and a video file.");
 //       return;
 //     }
-//     // Logic to upload thumbnail, then video, then submit form data will go here
-//     console.log("Submitting form with:", {
-//       courseName,
-//       courseSemester,
-//       description,
-//       thumbnailFile,
-//       videoFile,
-//     });
-//     toast.info("Form submission logic not yet implemented.");
+
+//     try {
+//       // Step 1: Upload Thumbnail
+//       const thumbFormData = new FormData();
+//       thumbFormData.append("image", thumbnailFile);
+//       const thumbRes = await uploadThumbnail(thumbFormData).unwrap();
+//       toast.success(thumbRes.message);
+
+//       // Step 2: Upload Video
+//       const videoFormData = new FormData();
+//       videoFormData.append("video", videoFile);
+//       const videoRes = await uploadVideo(videoFormData).unwrap();
+//       toast.success(videoRes.message);
+
+//       // Step 3: Create the Course with all the data
+//       await createCourse({
+//         name,
+//         semester,
+//         description,
+//         thumbnail: thumbRes.imageUrl,
+//         videoUrl: videoRes.videoUrl,
+//       }).unwrap();
+
+//       toast.success("Course successfully created!");
+//       navigate("/home");
+//     } catch (err) {
+//       toast.error(err?.data?.message || err.error);
+//     }
 //   };
 
 //   return (
@@ -67,27 +94,27 @@
 //           <div className="upload__video__header">Upload Video</div>
 //           <div className="upload__video__form">
 //             <form onSubmit={submitHandler}>
-//               {/* --- Text fields for Course Name, Details, Description --- */}
+//               {/* Text fields for Course Name, Semester, Description */}
 //               <div className="upload__video__form__courseName">
 //                 <label htmlFor="courseName">Course Name</label>
 //                 <input
-//                   value={courseName}
+//                   value={name}
 //                   type="text"
 //                   name="courseName"
 //                   required
 //                   placeholder="Enter Course name"
-//                   onChange={(e) => setCourseName(e.target.value)}
+//                   onChange={(e) => setName(e.target.value)}
 //                 />
 //               </div>
 //               <div className="upload__video__form__courseDetails">
-//                 <label htmlFor="courseSemester">Course Details</label>
+//                 <label htmlFor="semester">Semester</label>
 //                 <input
-//                   value={courseSemester}
+//                   value={semester}
 //                   type="text"
-//                   name="courseSemester"
+//                   name="semester"
 //                   required
 //                   placeholder="Enter Semester"
-//                   onChange={(e) => setCourseSemester(e.g.target.value)}
+//                   onChange={(e) => setSemester(e.target.value)}
 //                 />
 //               </div>
 //               <div className="upload__video__form__description">
@@ -102,14 +129,14 @@
 //                 />
 //               </div>
 
-//               {/* --- Thumbnail Upload Input and Preview --- */}
+//               {/* Thumbnail and Video Upload sections */}
 //               <div className="upload__video__form__main">
 //                 <div className="upload__video__form__main__thumbnail">
 //                   <label
 //                     htmlFor="thumbnail-upload"
 //                     className="upload__video__thumbnail__header"
 //                   >
-//                     Select Thumbnail
+//                     Select Thumbnail{" "}
 //                     <span>
 //                       {" "}
 //                       <FaUpload />{" "}
@@ -123,18 +150,21 @@
 //                     style={{ display: "none" }}
 //                   />
 //                   <div className="upload__video__thumbnail__icon">
-//                     <img
-//                       src={thumbnailPreview}
-//                       className="upload__video__thumbnail__icon__img"
-//                     />
+//                     {thumbnailPreview && (
+//                       <img
+//                         src={thumbnailPreview}
+//                         className="upload__video__thumbnail__icon__img"
+//                       />
+//                     )}
 //                   </div>
+//                   {isUploadingThumb && <div>Uploading Thumbnail...</div>}
 //                 </div>
 //                 <div className="upload__video__form__main__selectVideo">
 //                   <label
 //                     htmlFor="video-upload"
 //                     className="upload__video__form__main__selectVideo__header"
 //                   >
-//                     Select Video
+//                     Select Video{" "}
 //                     <span>
 //                       {" "}
 //                       <FaVideo />{" "}
@@ -147,23 +177,23 @@
 //                     onChange={videoChangeHandler}
 //                     style={{ display: "none" }}
 //                   />
-//                   {videoFile ? (
+//                   {videoFile && (
 //                     <div className="upload__video__form__main__selectVideo__details">
 //                       <p>{videoFile.name}</p>
 //                       <p>{formatFileSize(videoFile.size)}</p>
 //                     </div>
-//                   ) : (
-//                     <div className="upload__video__form__main__selectVideo__details">
-//                       <p>File Name: </p>
-//                       <p>File Size: </p>
-//                     </div>
 //                   )}
+//                   {isUploadingVideo && <div>Uploading Video...</div>}
 //                 </div>
 //               </div>
 
 //               <div className="upload__video__edit">
-//                 <button type="submit" className="upload__video__edit__button">
-//                   Upload
+//                 <button
+//                   type="submit"
+//                   className="upload__video__edit__button"
+//                   disabled={isCreating || isUploadingThumb || isUploadingVideo}
+//                 >
+//                   Upload Course
 //                 </button>
 //               </div>
 //             </form>
@@ -188,6 +218,7 @@ import Header from "../components/Header";
 import "../sass/screens/uploadScreen.scss";
 import { FaUpload, FaVideo } from "react-icons/fa";
 
+// Helper function to format file size
 const formatFileSize = (bytes) => {
   if (bytes === 0) return "0 Bytes";
   const k = 1024;
@@ -197,21 +228,27 @@ const formatFileSize = (bytes) => {
 };
 
 export default function UploadScreen() {
+  // State for text inputs
   const [name, setName] = useState("");
   const [semester, setSemester] = useState("");
   const [description, setDescription] = useState("");
+  const [topic, setTopic] = useState("");
+
+  // State for the files
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const [videoFile, setVideoFile] = useState(null);
 
   const navigate = useNavigate();
 
+  // Initialize Redux mutation hooks
   const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
   const [uploadThumbnail, { isLoading: isUploadingThumb }] =
     useUploadThumbnailMutation();
   const [uploadVideo, { isLoading: isUploadingVideo }] =
     useUploadVideoMutation();
 
+  // Handler for thumbnail file selection
   const thumbnailChangeHandler = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -220,6 +257,7 @@ export default function UploadScreen() {
     }
   };
 
+  // Handler for video file selection
   const videoChangeHandler = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -227,6 +265,7 @@ export default function UploadScreen() {
     }
   };
 
+  // --- FULLY IMPLEMENTED SUBMIT HANDLER ---
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!thumbnailFile || !videoFile) {
@@ -239,21 +278,23 @@ export default function UploadScreen() {
       const thumbFormData = new FormData();
       thumbFormData.append("image", thumbnailFile);
       const thumbRes = await uploadThumbnail(thumbFormData).unwrap();
-      toast.success(thumbRes.message);
+      toast.info("Thumbnail uploaded...");
 
       // Step 2: Upload Video
       const videoFormData = new FormData();
       videoFormData.append("video", videoFile);
       const videoRes = await uploadVideo(videoFormData).unwrap();
-      toast.success(videoRes.message);
+      toast.info("Video uploaded...");
 
       // Step 3: Create the Course with all the data
       await createCourse({
         name,
         semester,
         description,
+        topic,
         thumbnail: thumbRes.imageUrl,
         videoUrl: videoRes.videoUrl,
+        duration: videoRes.duration,
       }).unwrap();
 
       toast.success("Course successfully created!");
@@ -263,6 +304,8 @@ export default function UploadScreen() {
     }
   };
 
+  const isLoading = isCreating || isUploadingThumb || isUploadingVideo;
+
   return (
     <>
       <Header />
@@ -271,7 +314,6 @@ export default function UploadScreen() {
           <div className="upload__video__header">Upload Video</div>
           <div className="upload__video__form">
             <form onSubmit={submitHandler}>
-              {/* Text fields for Course Name, Semester, Description */}
               <div className="upload__video__form__courseName">
                 <label htmlFor="courseName">Course Name</label>
                 <input
@@ -294,19 +336,37 @@ export default function UploadScreen() {
                   onChange={(e) => setSemester(e.target.value)}
                 />
               </div>
+              <div className="upload__video__form__courseTopic">
+                <label htmlFor="semester">Topic</label>
+                <input
+                  value={topic}
+                  type="text"
+                  name="topic"
+                  required
+                  placeholder="Enter Course Topic"
+                  onChange={(e) => setTopic(e.target.value)}
+                />
+              </div>
               <div className="upload__video__form__description">
                 <label htmlFor="description">Video Description</label>
-                <input
+                {/* <input
                   value={description}
                   type="text"
                   name="description"
                   required
                   placeholder="Enter Video Description"
                   onChange={(e) => setDescription(e.target.value)}
-                />
+                /> */}
+                <textarea
+                  id="description"
+                  placeholder="Enter description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={4}
+                  required
+                ></textarea>
               </div>
 
-              {/* Thumbnail and Video Upload sections */}
               <div className="upload__video__form__main">
                 <div className="upload__video__form__main__thumbnail">
                   <label
@@ -327,14 +387,14 @@ export default function UploadScreen() {
                     style={{ display: "none" }}
                   />
                   <div className="upload__video__thumbnail__icon">
-                    {thumbnailPreview && (
-                      <img
-                        src={thumbnailPreview}
-                        className="upload__video__thumbnail__icon__img"
-                      />
-                    )}
+                    <img
+                      src={thumbnailPreview}
+                      className="upload__video__thumbnail__icon__img"
+                    />
                   </div>
-                  {isUploadingThumb && <div>Uploading Thumbnail...</div>}
+                  {isUploadingThumb && (
+                    <p className="uploading">Uploading...</p>
+                  )}
                 </div>
                 <div className="upload__video__form__main__selectVideo">
                   <label
@@ -354,13 +414,20 @@ export default function UploadScreen() {
                     onChange={videoChangeHandler}
                     style={{ display: "none" }}
                   />
-                  {videoFile && (
+                  {videoFile ? (
                     <div className="upload__video__form__main__selectVideo__details">
                       <p>{videoFile.name}</p>
                       <p>{formatFileSize(videoFile.size)}</p>
                     </div>
+                  ) : (
+                    <div className="upload__video__form__main__selectVideo__details">
+                      <p>File Name: </p>
+                      <p>File Size: </p>
+                    </div>
                   )}
-                  {isUploadingVideo && <div>Uploading Video...</div>}
+                  {isUploadingVideo && (
+                    <p className="uploading">Uploading...</p>
+                  )}
                 </div>
               </div>
 
@@ -368,9 +435,9 @@ export default function UploadScreen() {
                 <button
                   type="submit"
                   className="upload__video__edit__button"
-                  disabled={isCreating || isUploadingThumb || isUploadingVideo}
+                  disabled={isLoading}
                 >
-                  Upload Course
+                  {isLoading ? "Uploading..." : "Upload Course"}
                 </button>
               </div>
             </form>

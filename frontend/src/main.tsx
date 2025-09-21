@@ -16,6 +16,7 @@ import VideoScreen from "./screen/VideoScreen";
 import ProfileScreen from "./screen/ProfileScreen";
 import UploadScreen from "./screen/UploadScreen";
 import AdminScreen from "./screen/AdminScreen";
+import EditCourseScreen from "./screen/EditScreen";
 
 // Toastify
 import { ToastContainer } from "react-toastify";
@@ -39,13 +40,14 @@ const route = createBrowserRouter(
 
       {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/home" element={<HomeScreen />} />
-      <Route path="/video" element={<VideoScreen />} />
+      <Route path="/video/:id" element={<VideoScreen />} />
       <Route path="/profile" element={<ProfileScreen />} />
       {/* </Route> */}
 
       {/* teacher route */}
       <Route path="" element={<TeacherRoute />}>
         <Route path="/upload" element={<UploadScreen />} />
+        <Route path="/edit-course/:id" element={<EditCourseScreen />} />
       </Route>
       {/* admin route */}
       <Route path="" element={<AdminRoute />}>

@@ -24,10 +24,16 @@
       border-radius: 10px;
       color: rgb(103 155 145);
     }
+    span:last-of-type {
+      font-size: 1rem;
+      color: #131212;
+      font-weight: normal;
+      // text-decoration: underline;
+    }
     &:hover {
       padding: 0 10px;
       border-radius: 10px;
-      transform: scale(1.2);
+      transform: scale(1.1);
       color: #131212;
       background-color: silver;
     }
@@ -54,12 +60,17 @@
   font-size: 1.1rem;
   font-family: cursive;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .video__div {
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   min-height: 300px;
+  box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  border-radius: 10px;
+  width: 70%;
+  padding: 20px;
 }
 .video__div1 {
   // transition: all 0.5s;
@@ -69,25 +80,45 @@
   box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
 }
 
-.__inner {
-  background-color: #131212;
-  box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
-  margin: 20px;
-  padding: 50px;
-  border-radius: 10px;
-  transition: all 0.8s;
-  &:hover {
-    cursor: pointer;
-    transform: scale(0.95);
+.course-card-link {
+  width: 100%;
+}
+
+.course-card-actions {
+  width: 100%;
+  a {
+    width: 50%;
+  }
+  button {
+    width: 50%;
   }
 }
 .video__list {
   border-radius: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   font-size: 1.2rem;
+  &__inner {
+    background-color: #131212;
+    box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+    color: silver;
+    display: inline-block;
+    border-radius: 10px;
+    transition: all 0.8s;
+    width: 100%;
+    img {
+      border-radius: 50%;
+      width: 140px;
+      height: 140px;
+    }
+    &:hover {
+      cursor: pointer;
+      transform: scale(0.95);
+    }
+  }
 }
+
 .no-courses-message {
   transition: all 0.5s;
   padding: 20px;

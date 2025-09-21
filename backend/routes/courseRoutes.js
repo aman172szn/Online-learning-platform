@@ -3,6 +3,8 @@ import {
   createCourse,
   getCourses,
   getCourseById,
+  updateCourse,
+  deleteCourse,
 } from "../controllers/courseController.js";
 import { protect, teacher } from "../middleware/authMiddleware.js";
 
@@ -14,7 +16,10 @@ router
   .get(protect, getCourses) // GET /api/courses (Protected for all logged-in users)
   .post(protect, teacher, createCourse); // POST /api/courses (Protected for Teachers only)
 
-// This handles requests for a single course by its ID
-router.route("/:id").get(getCourseById); // GET /api/courses/:id (Public)
+router
+  .route("/:id")
+  .get(getCourseById)
+  .put(protect, teacher, updateCourse)
+  .delete(protect, teacher, deleteCourse);
 
 export default router;

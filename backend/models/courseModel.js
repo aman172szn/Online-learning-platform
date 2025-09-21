@@ -15,7 +15,10 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    // --- END CHANGE ---
+    topic: {
+      type: String,
+      required: true,
+    },
     videoUrl: {
       type: String,
       required: true,
@@ -26,7 +29,11 @@ const courseSchema = mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      required: false,
+      required: true,
+    },
+    duration: {
+      type: Number, // We'll store duration in seconds
+      required: true,
     },
   },
   {

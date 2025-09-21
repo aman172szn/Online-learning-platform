@@ -9,6 +9,7 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         url: COURSES_URL,
         params, // This will turn { semester: '2' } into ?semester=2 in the URL
       }),
+      providesTags: ["Course"],
       keepUnusedDataFor: 5,
     }),
     createCourse: builder.mutation({
@@ -17,6 +18,29 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Course"],
+    }),
+    getCourseDetails: builder.query({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}`,
+      }),
+      providesTags: (result, error, id) => [{ type: "Course", id }],
+      keepUnusedDataFor: 5,
+    }),
+    updateCourse: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Course"],
+    }),
+    deleteCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Course"],
     }),
     uploadThumbnail: builder.mutation({
       query: (data) => ({
@@ -37,7 +61,10 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetCoursesQuery,
+  useGetCourseDetailsQuery,
   useCreateCourseMutation,
   useUploadThumbnailMutation,
   useUploadVideoMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
 } = coursesApiSlice;
