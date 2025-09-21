@@ -3,7 +3,7 @@
 .edit-course {
   background-color: #131212;
   color: silver;
-  min-height: 100vh;
+  min-height: calc(100vh - 91px); // Adjust based on your header/footer height
   display: flex;
   justify-content: center;
   align-items: center;

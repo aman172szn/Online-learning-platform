@@ -24,7 +24,7 @@
   }
 }
 .profile {
-  min-height: 100vh;
+  min-height: calc(100vh - 91px); // Adjust based on your header/footer height
   width: 100%;
   display: flex;
   flex-direction: column;

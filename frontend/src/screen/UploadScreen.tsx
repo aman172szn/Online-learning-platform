@@ -373,11 +373,7 @@ export default function UploadScreen() {
                     htmlFor="thumbnail-upload"
                     className="upload__video__thumbnail__header"
                   >
-                    Select Thumbnail{" "}
-                    <span>
-                      {" "}
-                      <FaUpload />{" "}
-                    </span>
+                    Select Thumbnail <FaUpload />
                   </label>
                   <input
                     id="thumbnail-upload"

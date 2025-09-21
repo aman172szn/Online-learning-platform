@@ -5,7 +5,7 @@
 .homeScreen {
   background-color: #131212;
   color: silver;
-  min-height: 100vh;
+  min-height: calc(100vh - 91px); // Adjust based on your header/footer height
   padding: 10px;
   &__user {
     text-align: center;
@@ -65,40 +65,27 @@
 
 .video__div {
   display: flex;
-  // justify-content: center;
+  justify-content: center;
   min-height: 300px;
-  box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   border-radius: 10px;
-  width: 70%;
   padding: 20px;
 }
 .video__div1 {
-  // transition: all 0.5s;
   min-width: 90%;
   border-radius: 10px;
   background-color: rgb(14, 14, 14);
   box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
 }
 
-.course-card-link {
-  width: 100%;
-}
-
-.course-card-actions {
-  width: 100%;
-  a {
-    width: 50%;
-  }
-  button {
-    width: 50%;
-  }
-}
 .video__list {
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   font-size: 1.2rem;
+  box-shadow: #f7f8f8 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  width: 90%;
+  padding: 20px;
   &__inner {
     background-color: #131212;
     box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
@@ -116,6 +103,35 @@
       cursor: pointer;
       transform: scale(0.95);
     }
+  }
+}
+.course-card-link {
+  width: 100%;
+}
+
+.course-card-actions {
+  width: 100%;
+  a {
+    width: 50%;
+  }
+  button {
+    width: 50%;
+  }
+}
+.btn-edit,
+.btn-delete {
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 0;
+  background-color: rgb(14, 14, 14);
+  color: silver;
+  // box-shadow: #d3dad96b 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  font-weight: bold;
+  border: 2px solid rgba(253, 253, 253, 0.603);
+  transition: all 0.8s;
+  &:hover {
+    cursor: pointer;
+    border: 2px solid rgb(70, 192, 168);
   }
 }
 
@@ -139,7 +155,6 @@
 
 .upload_button {
   text-align: center;
-  // width: 250px;
   border-radius: 10px;
   font-size: 1.2rem;
   padding: 10px 0;
@@ -153,7 +168,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // transition: all 0.7s;
   width: 17%;
   transition: all 1s ease-in-out;
 
