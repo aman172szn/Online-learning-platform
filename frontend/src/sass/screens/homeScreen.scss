@@ -48,10 +48,18 @@
   justify-content: space-between;
   align-items: center;
   font-size: 1.2rem;
+  @include ut.breakpoint(medium) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 .video__title {
   margin-left: 20px;
-  font-size: 1.5rem;
+  font-size: 3.2rem;
+  @include ut.breakpoint(medium) {
+    margin-left: 0px;
+  }
 }
 
 .filter-container > select {
@@ -80,28 +88,35 @@
 .video__list {
   border-radius: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   gap: 20px;
   font-size: 1.2rem;
-  box-shadow: #f7f8f8 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
-  width: 90%;
-  padding: 20px;
+  // box-shadow: #f7f8f8 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  width: 100%;
+  // padding: 20px;
+  @include ut.breakpoint(large) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  @include ut.breakpoint(small) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
   &__inner {
     background-color: #131212;
     box-shadow: #d3dad954 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
     color: silver;
     display: inline-block;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 0.8s;
     width: 100%;
     img {
-      border-radius: 50%;
-      width: 140px;
-      height: 140px;
+      border-radius: 10px;
+      width: 100%;
+      height: 400px;
     }
     &:hover {
       cursor: pointer;
-      transform: scale(0.95);
+      transform: scale(0.99);
     }
   }
 }
@@ -110,6 +125,7 @@
 }
 
 .course-card-actions {
+  margin-top: 2px;
   width: 100%;
   a {
     width: 50%;
@@ -121,13 +137,14 @@
 .btn-edit,
 .btn-delete {
   text-align: center;
-  border-radius: 10px;
-  padding: 5px 0;
+  border-radius: 12px;
+  padding: 7px 0;
+  font-size: 1.2rem;
   background-color: rgb(14, 14, 14);
   color: silver;
   // box-shadow: #d3dad96b 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
-  border: 2px solid rgba(253, 253, 253, 0.603);
+  border: 1px solid rgba(253, 253, 253, 0.603);
   transition: all 0.8s;
   &:hover {
     cursor: pointer;
@@ -180,4 +197,7 @@
     color: #131212;
     box-shadow: #d3dad9 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   }
+}
+h4 {
+  margin: 0;
 }
