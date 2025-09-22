@@ -94,42 +94,86 @@ const updateCourse = asyncHandler(async (req, res) => {
 // @desc    Delete a course
 // @route   DELETE /api/courses/:id
 // @access  Private/Teacher
+// const deleteCourse = asyncHandler(async (req, res) => {
+//   const course = await Course.findById(req.params.id);
+
+//   if (course) {
+//     // Check if the user is the owner of the course
+//     if (course.user.toString() !== req.user._id.toString()) {
+//       res.status(401);
+//       throw new Error("User not authorized to delete this course");
+//     }
+
+//     // --- NEW LOGIC TO DELETE FROM CLOUDINARY ---
+//     try {
+//       // 1. Extract Public IDs from the URLs
+//       const thumbnailPublicId = course.thumbnail.split("/").pop().split(".")[0];
+//       const videoPublicId = course.videoUrl.split("/").pop().split(".")[0];
+
+//       // 2. Delete the files from Cloudinary
+//       await cloudinary.uploader.destroy(
+//         `course_thumbnails/${thumbnailPublicId}`,
+//         { resource_type: "image" }
+//       );
+//       await cloudinary.uploader.destroy(`course_videos/${videoPublicId}`, {
+//         resource_type: "video",
+//       });
+//     } catch (error) {
+//       console.error("Error deleting files from Cloudinary:", error);
+//       // Decide if you want to proceed with DB deletion even if file deletion fails
+//     }
+
+//     // 3. Delete the course from the database
+//     await Course.deleteOne({ _id: course._id });
+//     res.json({ message: "Course and associated files removed" });
+//   } else {
+//     res.status(404);
+//     throw new Error("Course not found");
+//   }
+// });
+
 const deleteCourse = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
 
   if (course) {
-    // Check if the user is the owner of the course
     if (course.user.toString() !== req.user._id.toString()) {
       res.status(401);
       throw new Error("User not authorized to delete this course");
     }
 
-    // --- NEW LOGIC TO DELETE FROM CLOUDINARY ---
     try {
-      // 1. Extract Public IDs from the URLs
-      const thumbnailPublicId = course.thumbnail.split("/").pop().split(".")[0];
-      const videoPublicId = course.videoUrl.split("/").pop().split(".")[0];
+      const getPublicId = (url) => {
+        const parts = url.split("/");
+        const publicIdWithFolder = parts.slice(-2).join("/").split(".")[0];
+        return publicIdWithFolder;
+      };
 
-      // 2. Delete the files from Cloudinary
-      await cloudinary.uploader.destroy(
-        `course_thumbnails/${thumbnailPublicId}`,
-        { resource_type: "image" }
-      );
-      await cloudinary.uploader.destroy(`course_videos/${videoPublicId}`, {
-        resource_type: "video",
-      });
+      // --- ADD THIS CHECK for the thumbnail ---
+      if (course.thumbnail && course.thumbnail.includes("cloudinary.com")) {
+        const thumbnailPublicId = getPublicId(course.thumbnail);
+        await cloudinary.uploader.destroy(thumbnailPublicId, {
+          resource_type: "image",
+        });
+        console.log("Successfully deleted thumbnail from Cloudinary.");
+      }
+
+      // --- ADD THIS CHECK for the video ---
+      if (course.videoUrl && course.videoUrl.includes("cloudinary.com")) {
+        const videoPublicId = getPublicId(course.videoUrl);
+        await cloudinary.uploader.destroy(videoPublicId, {
+          resource_type: "video",
+        });
+        console.log("Successfully deleted video from Cloudinary.");
+      }
     } catch (error) {
-      console.error("Error deleting files from Cloudinary:", error);
-      // Decide if you want to proceed with DB deletion even if file deletion fails
+      console.error("Error during Cloudinary file deletion:", error);
     }
 
-    // 3. Delete the course from the database
     await Course.deleteOne({ _id: course._id });
-    res.json({ message: "Course and associated files removed" });
+    res.json({ message: "Course removed" });
   } else {
     res.status(404);
     throw new Error("Course not found");
   }
 });
-
 export { createCourse, getCourses, getCourseById, updateCourse, deleteCourse };
