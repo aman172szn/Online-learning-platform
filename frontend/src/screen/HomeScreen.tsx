@@ -134,6 +134,7 @@
 
 // export default HomeScreen;
 
+import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -243,40 +244,78 @@ const HomeScreen = () => {
             ) : (
               <div className="video__list">
                 {filteredCourses.map((course) => (
-                  <div className="course-card" key={course._id}>
-                    {/* The link now only wraps the content, not the buttons */}
-                    <Link
-                      to={`/video/${course._id}`}
-                      className="course-card-link"
-                    >
-                      <div className="video__list__inner">
-                        <img src={course.thumbnail} alt={course.name} />
-                        <h4>Subject: {course.name}</h4>
-                        <p>Topic: {course.topic}</p>
-                        <p>Duration: {formatDuration(course.duration)}</p>
-                      </div>
-                    </Link>
-
+                  <React.Fragment key={course._id}>
                     {/* The buttons are now siblings to the link, not inside it */}
-                    {userInfo &&
-                      userInfo.isTeacher &&
-                      userInfo._id === course.user && (
-                        <div className="course-card-actions">
-                          <Link to={`/edit-course/${course._id}`}>
-                            <button className="btn-edit">Edit</button>
-                          </Link>
-                          <button
-                            className="btn-delete"
-                            onClick={(e) => deleteHandler(e, course._id)}
-                            disabled={isDeleting}
-                          >
-                            Delete
-                          </button>
+                    <div className="course-card">
+                      {userInfo &&
+                        userInfo.isTeacher &&
+                        userInfo._id === course.user && (
+                          <div className="course-card-actions">
+                            <Link to={`/edit-course/${course._id}`}>
+                              <button className="btn-edit">Edit</button>
+                            </Link>
+                            <button
+                              className="btn-delete"
+                              onClick={(e) => deleteHandler(e, course._id)}
+                              disabled={isDeleting}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      {/* The link now only wraps the content, not the buttons */}
+                      <Link
+                        to={`/video/${course._id}`}
+                        className="course-card-link"
+                      >
+                        <div className="video__list__inner">
+                          <img src={course.thumbnail} alt={course.name} />
+                          <h4>Subject: {course.name}</h4>
+                          <p>Topic: {course.topic}</p>
+                          <p>Duration: {formatDuration(course.duration)}</p>
                         </div>
-                      )}
-                  </div>
+                      </Link>
+                    </div>
+                  </React.Fragment>
                 ))}
               </div>
+
+              // <div className="video__list">
+              //   {filteredCourses.map((course) => (
+              //     <div className="course-card" key={course._id}>
+              //       {/* The link now only wraps the content, not the buttons */}
+              //       <Link
+              //         to={`/video/${course._id}`}
+              //         className="course-card-link"
+              //       >
+              //         <div className="video__list__inner">
+              //           <img src={course.thumbnail} alt={course.name} />
+              //           <h4>Subject: {course.name}</h4>
+              //           <p>Topic: {course.topic}</p>
+              //           <p>Duration: {formatDuration(course.duration)}</p>
+              //         </div>
+              //       </Link>
+
+              //       {/* The buttons are now siblings to the link, not inside it */}
+              //       {userInfo &&
+              //         userInfo.isTeacher &&
+              //         userInfo._id === course.user && (
+              //           <div className="course-card-actions">
+              //             <Link to={`/edit-course/${course._id}`}>
+              //               <button className="btn-edit">Edit</button>
+              //             </Link>
+              //             <button
+              //               className="btn-delete"
+              //               onClick={(e) => deleteHandler(e, course._id)}
+              //               disabled={isDeleting}
+              //             >
+              //               Delete
+              //             </button>
+              //           </div>
+              //         )}
+              //     </div>
+              //   ))}
+              // </div>
             )}
             {/* Intelligent "empty" messages */}
             {filteredCourses &&

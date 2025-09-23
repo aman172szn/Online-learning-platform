@@ -36,7 +36,6 @@ router.post(
       );
       uploadStream.end(req.file.buffer);
     } catch (err) {
-      // 3. Fix the error response to be valid JSON
       res.status(500).json({ message: err.message || "Server Error" });
     }
   }
@@ -64,13 +63,12 @@ router.post(
           res.status(200).json({
             message: "Video uploaded successfully",
             videoUrl: result.secure_url,
-            duration: result.duration, // <-- SEND BACK THE DURATION
+            duration: result.duration,
           });
         }
       );
       uploadStream.end(req.file.buffer);
     } catch (err) {
-      // 3. Fix the error response to be valid JSON
       res.status(500).json({ message: err.message || "Server Error" });
     }
   }
