@@ -1,114 +1,3 @@
-// import { useState, useEffect } from "react";
-// import "../../sass/screens/utils/register.scss";
-// import FormContainer from "../../components/Reusable/FormContainer";
-// import Button from "../../components/Reusable/Button";
-// import { Link, useNavigate, useLocation } from "react-router-dom";
-
-// // import { toast } from "react-toastify";
-
-// const Login = () => {
-//   const { search } = useLocation();
-//   const searchParams = new URLSearchParams(search);
-//   const redirect = searchParams.get("redirect") || "/";
-//   const [formData, setFormData] = useState({
-//     userName: "",
-//     userEmail: "",
-//     userPassword: "",
-//   });
-//   const formControllerHandler = (
-//     event: React.ChangeEvent<HTMLInputElement>
-//   ) => {
-//     const { value, name } = event.target;
-//     setFormData((prevFormData) => {
-//       return { ...prevFormData, [name]: value };
-//     });
-//   };
-
-//   return (
-//     <div className="register">
-//       <div className="landing__image"></div>
-//       <div className="register__main">
-//         <div className="register__inner">
-//           <div className="register__inner__header">
-//             <div className="register__inner__header__topHeader">
-//               Platform Name
-//             </div>
-//             <div className="register__inner__header__bottomHeader">
-//               Register to the platform
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="register__form">
-//           <form action="#">
-//             <div className="register__form__userName">
-//               <label htmlFor="userName">Name</label>
-//               <input
-//                 // value={formData?.name}
-//                 value={formData?.userName}
-//                 type="text"
-//                 name="userName"
-//                 required
-//                 placeholder="Enter name"
-//                 onChange={formControllerHandler}
-//                 autoComplete="off"
-//               />
-//             </div>
-//             <div className="register__form__userEmail">
-//               <label htmlFor="userEmail">Email Address</label>
-//               <input
-//                 value={formData.userEmail}
-//                 type="email"
-//                 name="userEmail"
-//                 required
-//                 placeholder="Enter email"
-//                 onChange={formControllerHandler}
-//                 autoComplete="off"
-//               />
-//             </div>
-//             <div className="register__form__userPassword">
-//               <label htmlFor="userPassword">Password</label>
-//               <input
-//                 value={formData.userPassword}
-//                 type="password"
-//                 name="userPassword"
-//                 required
-//                 placeholder="Enter password"
-//                 onChange={formControllerHandler}
-//                 autoComplete="off"
-//               />
-//             </div>
-//             {/* <Button
-//               // onClick={(event) => submitHandler(event)}
-//               className="formContainer__loginBtn"
-//               secondary
-//               rounded
-//               // disabled={isLoading}
-//               // loading={isLoading}
-//             >
-//               Register
-//             </Button> */}
-//             <div className="register__edit">
-//               <div className="register__edit__button"> Upload Button </div>
-//             </div>
-//             {/* {isLoading && <div>Getting User</div>} */}
-//             <div className="register__loginLink">
-//               Already have an account?
-//               <Link
-//                 to={redirect ? `/register?redirect=${redirect}` : "/register"}
-//               >
-//                 Login
-//               </Link>
-//             </div>
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -122,6 +11,7 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -135,19 +25,45 @@ const RegisterScreen = () => {
     }
   }, [navigate, userInfo]);
 
+  const frontendValidationCheck = () => {
+    // --- Validation Logic ---
+    const newErrors = {};
+    newErrors.name = "Name is required.";
+    newErrors.email = "Email must be a valid address, e.g me@mydomain.com";
+    newErrors.password = `
+                Password must be alphanumeric, (@ _ - . allowed)
+                and must be 8-20 characters`;
+    newErrors.confirmPassword = "Passwords do not match.";
+
+    setErrors(newErrors);
+
+    // If there are any errors, stop the submission
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    frontendValidationCheck();
+    try {
+      const res = await register({ name, email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate("/home");
+    } catch (err) {
+      // toast.error(err?.data?.message || err.error);
+      toast.error("Fill in the Details");
+    }
+  };
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+  const handlePasswordCheck = () => {
+    if (confirmPassword && password !== confirmPassword) {
+      setErrors({ ...errors, confirmPassword: "Passwords do not match." });
     } else {
-      try {
-        const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials({ ...res }));
-        navigate("/home");
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
+      // If they do match, clear the specific error
+      const newErrors = { ...errors };
+      delete newErrors.confirmPassword;
+      setErrors(newErrors);
     }
   };
 
@@ -174,11 +90,21 @@ const RegisterScreen = () => {
                 value={name}
                 type="text"
                 name="userName"
-                required
-                placeholder="Enter name"
-                onChange={(e) => setName(e.target.value)}
+                placeholder=" "
+                onChange={(e) => {
+                  setName(e.target.value);
+                  // Clear the error for this field when the user types
+                  if (errors.name) {
+                    const newErrors = { ...errors };
+                    delete newErrors.name;
+                    setErrors(newErrors);
+                  }
+                }}
                 autoComplete="off"
               />
+              <p className={`error-message ${errors.name ? "visible" : ""}`}>
+                {errors.name || "Name is required."}
+              </p>
             </div>
             <div className="register__form__userEmail">
               <label htmlFor="userEmail">Email Address</label>
@@ -186,11 +112,18 @@ const RegisterScreen = () => {
                 value={email}
                 type="email"
                 name="userEmail"
-                required
-                placeholder="Enter email"
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder=" "
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: undefined });
+                }}
                 autoComplete="off"
+                pattern="^([a-z0-9][._]?)+[a-z0-9]@[a-z0-9]+(\.?[a-z0-9]){2}\.(com?|net|org)+(\.[a-z0-9]{2,4})?"
               />
+              <p className={`error-message ${errors.email ? "visible" : ""}`}>
+                {errors.email ||
+                  "Email must be a valid address, e.g me@mydomain.com"}
+              </p>
             </div>
             <div className="register__form__userPassword">
               <label htmlFor="userPassword">Password</label>
@@ -198,11 +131,27 @@ const RegisterScreen = () => {
                 value={password}
                 type="password"
                 name="userPassword"
-                required
-                placeholder="Enter password"
-                onChange={(e) => setPassword(e.target.value)}
+                // required
+                placeholder=" "
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (errors.password) {
+                    const newErrors = { ...errors };
+                    delete newErrors.password;
+                    setErrors(newErrors);
+                  }
+                }}
                 autoComplete="off"
+                pattern="^([\w@-_\.]{8,20})$"
               />
+
+              <p
+                className={`error-message ${errors.password ? "visible" : ""}`}
+              >
+                {errors.password ||
+                  ` Password must be alphanumeric, (@ _ - . allowed)
+                and must be 8-20 characters`}
+              </p>
             </div>
             <div className="register__form__userPassword">
               <label htmlFor="confirmPassword">Confirm Password</label>
@@ -210,11 +159,20 @@ const RegisterScreen = () => {
                 value={confirmPassword}
                 type="password"
                 name="confirmPassword"
-                required
-                placeholder="Confirm password"
+                // required
+                placeholder=" "
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                onBlur={handlePasswordCheck}
                 autoComplete="off"
+                pattern="^([\w@-_\.]{8,20})$"
               />
+              <p
+                className={`error-message ${
+                  errors.confirmPassword ? "visible" : ""
+                }`}
+              >
+                {errors.confirmPassword}
+              </p>
             </div>
 
             <div className="register__edit">

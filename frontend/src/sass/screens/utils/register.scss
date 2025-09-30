@@ -29,6 +29,7 @@
       &__bottomHeader {
         font-size: 1.2rem;
         font-style: italic;
+        color: #278d7e;
       }
     }
   }
@@ -69,6 +70,9 @@
   &__loginLink {
     // display: flex;
     font-size: 1.2rem;
+    a {
+      color: #278d7e;
+    }
   }
 }
 
@@ -101,6 +105,7 @@
   padding: 10px 0;
   background-color: rgb(14, 14, 14);
   text-decoration: none;
+  border: none;
   color: silver;
   box-shadow: #d3dad9d7 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
@@ -112,15 +117,48 @@
   // transition: all 0.7s;
   transition: all 0.6s ease-in-out;
   flex-grow: 1;
-
+  font-family: cursive;
   &:hover {
     width: 100%;
     cursor: pointer;
     // color: #1af9b3;
-    transform: scale(0.95);
+    transform: scaleX(0.95);
     background-color: whitesmoke;
+    // color: #131212;
     color: #131212;
     box-shadow: rgba(0, 0, 0, 0.493) 0px 4px 12px;
-    // box-shadow: #000000 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   }
+}
+
+.error-message {
+  visibility: hidden;
+  height: 1rem;
+  font-weight: bold;
+  color: red;
+  font-size: 0.7rem;
+  text-align: left;
+  // width: 30em;
+  margin-bottom: 0;
+  margin-top: 0.2rem;
+  &.visible {
+    visibility: visible; // This class will make it appear
+  }
+}
+
+input:focus {
+  background-color: rgb(255, 255, 255);
+  outline: 2px solid rgb(29, 100, 231);
+  box-shadow: 1px 5px 8px 2px rgba(0, 0, 0, 0.164);
+}
+
+input:not(:focus):not(:placeholder-shown):invalid {
+  outline: 2px solid red;
+}
+
+input:not(:focus):not(:placeholder-shown):invalid ~ .error-message {
+  visibility: visible;
+}
+
+input:not(:focus):not(:placeholder-shown):valid {
+  outline: 2px solid rgba(111, 153, 111, 0.808);
 }

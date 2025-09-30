@@ -150,7 +150,7 @@ const LoginScreen = () => {
                 value={email}
                 type="email"
                 name="userEmail"
-                required
+                // required
                 placeholder="Enter email"
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
@@ -162,7 +162,7 @@ const LoginScreen = () => {
                 value={password}
                 type="password"
                 name="userPassword"
-                required
+                // required
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="off"

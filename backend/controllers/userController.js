@@ -40,6 +40,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      isTeacher: updatedUser.isTeacher, // <-- ADD THIS
+      isAdmin: updatedUser.isAdmin,
     });
   } else {
     res.status(404);

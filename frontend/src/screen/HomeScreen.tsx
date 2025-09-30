@@ -247,6 +247,29 @@ const HomeScreen = () => {
                   <React.Fragment key={course._id}>
                     {/* The buttons are now siblings to the link, not inside it */}
                     <div className="course-card">
+                      {/* The link now only wraps the content, not the buttons */}
+                      <Link
+                        to={`/video/${course._id}`}
+                        className="course-card-link"
+                      >
+                        <div className="video__list__inner">
+                          <img src={course.thumbnail} alt={course.name} />
+                          <div className="video__list__inner__details">
+                            <div className="split">
+                              {/* <h4>Subject</h4> */}
+                              <span>{course.name}</span>
+                            </div>
+                            <div className="split">
+                              {/* <h4>Topic</h4> */}
+                              <span>{course.topic}</span>
+                            </div>
+                          </div>
+
+                          <p className="duration">
+                            {formatDuration(course.duration)}
+                          </p>
+                        </div>
+                      </Link>
                       {userInfo &&
                         userInfo.isTeacher &&
                         userInfo._id === course.user && (
@@ -263,18 +286,6 @@ const HomeScreen = () => {
                             </button>
                           </div>
                         )}
-                      {/* The link now only wraps the content, not the buttons */}
-                      <Link
-                        to={`/video/${course._id}`}
-                        className="course-card-link"
-                      >
-                        <div className="video__list__inner">
-                          <img src={course.thumbnail} alt={course.name} />
-                          <h4>Subject: {course.name}</h4>
-                          <p>Topic: {course.topic}</p>
-                          <p>Duration: {formatDuration(course.duration)}</p>
-                        </div>
-                      </Link>
                     </div>
                   </React.Fragment>
                 ))}

@@ -1,16 +1,13 @@
 import express from "express";
 import multer from "multer";
 import cloudinary from "../config/cloudinary.js";
-// 1. Import 'teacher' middleware
 import { protect, teacher } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // @route   POST /api/upload/image
-// 2. Add 'teacher' middleware to the route
 router.post(
   "/image",
   protect,

@@ -42,6 +42,7 @@
       font-style: italic;
       font-size: hp.$headerBottomSize;
       padding-bottom: 1.2rem;
+      color: #278d7e;
     }
   }
   &__form {
@@ -70,6 +71,9 @@
       }
       &__registerLink {
         font-size: 1.2rem;
+        a {
+          color: #278d7e;
+        }
       }
     }
   }
@@ -89,6 +93,7 @@
   padding: 10px 0;
   background-color: rgb(14, 14, 14);
   text-decoration: none;
+  border: none;
   color: silver;
   box-shadow: #d3dad9d7 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
@@ -98,14 +103,14 @@
   justify-content: center;
   align-items: center;
   // transition: all 0.7s;
-  transition: all 0.6s ease-in-out;
+  transition: all 0.7s ease-in-out;
   flex-grow: 1;
-
+  font-family: cursive;
   &:hover {
     width: 100%;
     cursor: pointer;
     // color: #1af9b3;
-    transform: scale(0.95);
+    transform: scaleX(0.95);
     background-color: whitesmoke;
     color: #131212;
     box-shadow: rgba(0, 0, 0, 0.493) 0px 4px 12px;

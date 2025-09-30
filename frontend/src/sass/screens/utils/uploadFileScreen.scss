@@ -27,7 +27,7 @@
     @include ut.breakpoint(medium) {
       width: 90%;
     }
-    box-shadow: rgba(217, 174, 149, 0.555) 0px 2px 8px 0px;
+    box-shadow: #278d7e 0px 2px 8px 0px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -110,8 +110,8 @@
   &:hover {
     cursor: pointer;
     transform: scale(0.95);
-    border: 1px solid #31c4ae;
-    box-shadow: #31c4ae 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+    border: 1px solid #278d7e00;
+    box-shadow: #278d7e 0px 0px 5px 0px, #000000 0px 0px 1px 0px;
   }
 
   // &:hover {
