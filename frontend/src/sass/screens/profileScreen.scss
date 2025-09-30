@@ -1,3 +1,5 @@
+@use "../util/" as ut;
+
 .profile {
   color: silver;
   background-color: #131212;
@@ -8,8 +10,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width: 24%;
-    height: 620px;
+    width: 400px;
+    // height: 620px;
     border-radius: 30px;
     padding: 10px;
     box-shadow: #77928e 0px 0px 0px 2px inset,
@@ -17,6 +19,16 @@
       rgb(14, 14, 14) 20px -20px 0px -3px, #979999 20px -20px,
       rgb(14, 14, 14) 30px -30px 0px -3px;
     transition: all 0.5s;
+    @include ut.breakpoint(larger) {
+      width: 350px;
+    }
+    @include ut.breakpoint(medium) {
+      width: 300px;
+    }
+    @include ut.breakpoint(xSmall) {
+      width: fit-content;
+      margin-right: 20px;
+    }
     &:hover {
       box-shadow: #e6ebea 0px 0px 0px 2px inset,
         rgb(14, 14, 14) 10px -10px 0px -3px, #36ceb7 10px -10px,
@@ -27,6 +39,7 @@
   &__title {
     text-align: center;
     font-size: 3rem;
+    color: #278d7e;
   }
 }
 .profile {
@@ -51,9 +64,8 @@
   }
   &__form {
     // margin-top: auto;
-
-    min-width: 250px;
-    max-width: 850px;
+    // min-width: 250px;
+    // max-width: 850px;
     width: 98%;
     // margin: 10px auto;
     font-size: 2rem;
@@ -61,7 +73,7 @@
     > form {
       height: 100%;
       display: flex;
-      gap: 20px;
+      // gap: 20px;
       flex-direction: column;
       label {
         font-size: 1.5rem;
@@ -86,7 +98,7 @@
     &__userPassword {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 5px;
     }
   }
   &__loginLink {
@@ -124,9 +136,9 @@
   padding: 10px 0;
   background-color: rgb(14, 14, 14);
   text-decoration: none;
-  color: silver;
+  color: #278d7e;
   border: none;
-  box-shadow: #a3a3a3d7 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -142,9 +154,28 @@
     cursor: pointer;
     // color: #1af9b3;
     transform: scale(0.95);
-    background-color: rgb(233, 233, 233);
-    color: #131212;
-    box-shadow: rgba(0, 0, 0, 0.493) 0px 4px 12px;
-    // box-shadow: #000000 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+    background-color: silver;
+    color: #278d7e;
+    box-shadow: #278d7e 0px 0px 0px 3px;
   }
+}
+
+// frontend validation
+.error-message-profile {
+  visibility: hidden;
+  height: fit-content;
+  font-weight: bold;
+  color: red;
+  font-size: 0.7rem;
+  text-align: left;
+  // width: 30em;
+  margin-bottom: 0;
+  margin-top: 0.2rem;
+  &.visible {
+    visibility: visible; // This class will make it appear
+  }
+}
+
+input:not(:focus):not(:placeholder-shown):invalid ~ .error-message-profile {
+  visibility: visible;
 }

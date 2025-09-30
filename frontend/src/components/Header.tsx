@@ -114,7 +114,6 @@ export default function Header() {
             Home
           </Link>
         </li>
-
         {/* --- CONDITIONAL RENDERING --- */}
         {userInfo && userInfo.isAdmin && (
           <li

@@ -7,7 +7,7 @@ import {
 } from "../store/slices/coursesApiSlice";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "../sass/screens/editCourseScreen.scss"; // Your SCSS file
+import "../sass/screens/editCourseScreen.scss";
 
 const EditCourseScreen = () => {
   const { id: courseId } = useParams();

@@ -190,13 +190,22 @@ const HomeScreen = () => {
       }
     }
   };
-
+  function capitalizeFirstLetter(string) {
+    if (!string) {
+      // Handle empty or null strings
+      return "";
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   return (
     <>
       <Header />
       <div className="homeScreen">
         <div className="homeScreen__user">
-          <span>{userInfo ? userInfo.name : "User"}</span>, Welcome
+          <span>
+            {userInfo ? capitalizeFirstLetter(userInfo.name) : "User"}
+          </span>
+          , Welcome
           {userInfo && <span> {role}.</span>}
         </div>
 

@@ -157,11 +157,14 @@ const ProfileScreen = () => {
                   value={name}
                   type="text"
                   name="userName"
-                  required
+                  // required
                   placeholder="Enter name"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                   autoComplete="off"
                 />
+                <p className={`error-message-profile`}>{"Name is required."}</p>
               </div>
               <div className="profile__form__userEmail">
                 <label htmlFor="userEmail">Email Address</label>
@@ -169,11 +172,17 @@ const ProfileScreen = () => {
                   value={email}
                   type="email"
                   name="userEmail"
-                  required
+                  // required
                   placeholder="Enter email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  pattern="^([a-z0-9][._]?)+[a-z0-9]@[a-z0-9]+(\.?[a-z0-9]){2}\.(com?|net|org)+(\.[a-z0-9]{2,4})?"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                   autoComplete="off"
                 />
+                <p className={`error-message-profile`}>
+                  {"Email must be a valid address, e.g me@mydomain.com"}
+                </p>
               </div>
               <div className="profile__form__userPassword">
                 <label htmlFor="userPassword">New Password</label>
@@ -182,9 +191,16 @@ const ProfileScreen = () => {
                   type="password"
                   name="userPassword"
                   placeholder="Enter new password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  pattern="^([\w@-_\.]{8,20})$"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   autoComplete="off"
                 />
+                <p className={`error-message-profile`}>
+                  {` Password must be alphanumeric, (@ _ - . allowed)
+                and must be 8-20 characters`}
+                </p>
               </div>
               <div className="profile__form__userPassword">
                 <label htmlFor="confirmPassword">Confirm New Password</label>
@@ -194,8 +210,12 @@ const ProfileScreen = () => {
                   name="confirmPassword"
                   placeholder="Confirm new password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  pattern={password}
                   autoComplete="off"
                 />
+                <p className={`error-message-profile`}>
+                  {"Passwords do not match."}
+                </p>
               </div>
               <div className="profile__edit">
                 <button

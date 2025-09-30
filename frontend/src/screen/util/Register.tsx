@@ -25,18 +25,25 @@ const RegisterScreen = () => {
     }
   }, [navigate, userInfo]);
 
+  // Frontend Validation Logic
   const frontendValidationCheck = () => {
-    // --- Validation Logic ---
     const newErrors = {};
-    newErrors.name = "Name is required.";
-    newErrors.email = "Email must be a valid address, e.g me@mydomain.com";
-    newErrors.password = `
+    if (!name.trim()) {
+      newErrors.name = "Name is required.";
+    }
+    if (!email.trim()) {
+      newErrors.email = "Email must be a valid address, e.g me@mydomain.com";
+    }
+    if (password.length < 8) {
+      newErrors.password = `
                 Password must be alphanumeric, (@ _ - . allowed)
                 and must be 8-20 characters`;
-    newErrors.confirmPassword = "Passwords do not match.";
+    }
+    if (newErrors.password !== newErrors.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
 
     setErrors(newErrors);
-
     // If there are any errors, stop the submission
     if (Object.keys(newErrors).length > 0) {
       return;
@@ -94,11 +101,7 @@ const RegisterScreen = () => {
                 onChange={(e) => {
                   setName(e.target.value);
                   // Clear the error for this field when the user types
-                  if (errors.name) {
-                    const newErrors = { ...errors };
-                    delete newErrors.name;
-                    setErrors(newErrors);
-                  }
+                  if (errors.name) setErrors({ ...errors, name: undefined });
                 }}
                 autoComplete="off"
               />
@@ -135,11 +138,8 @@ const RegisterScreen = () => {
                 placeholder=" "
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if (errors.password) {
-                    const newErrors = { ...errors };
-                    delete newErrors.password;
-                    setErrors(newErrors);
-                  }
+                  if (errors.password)
+                    setErrors({ ...errors, password: undefined });
                 }}
                 autoComplete="off"
                 pattern="^([\w@-_\.]{8,20})$"
@@ -171,7 +171,7 @@ const RegisterScreen = () => {
                   errors.confirmPassword ? "visible" : ""
                 }`}
               >
-                {errors.confirmPassword}
+                {errors.confirmPassword || "Passwords do not match."}
               </p>
             </div>
 

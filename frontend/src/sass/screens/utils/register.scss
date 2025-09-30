@@ -30,6 +30,7 @@
         font-size: 1.2rem;
         font-style: italic;
         color: #278d7e;
+        margin-bottom: 5px;
       }
     }
   }
@@ -47,7 +48,7 @@
     > form {
       height: 100%;
       display: flex;
-      gap: 10px;
+      // gap: 10px;
       flex-direction: column;
     }
     input {
@@ -64,7 +65,6 @@
     &__userPassword {
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
   }
   &__loginLink {
@@ -107,7 +107,7 @@
   text-decoration: none;
   border: none;
   color: silver;
-  box-shadow: #d3dad9d7 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -121,15 +121,14 @@
   &:hover {
     width: 100%;
     cursor: pointer;
-    // color: #1af9b3;
-    transform: scaleX(0.95);
-    background-color: whitesmoke;
-    // color: #131212;
-    color: #131212;
-    box-shadow: rgba(0, 0, 0, 0.493) 0px 4px 12px;
+    transform: scale(0.95);
+    background-color: silver;
+    color: #278d7e;
+    box-shadow: #278d7e 0px 0px 0px 3px;
   }
 }
 
+// frontend validation
 .error-message {
   visibility: hidden;
   height: 1rem;
@@ -147,7 +146,7 @@
 
 input:focus {
   background-color: rgb(255, 255, 255);
-  outline: 2px solid rgb(29, 100, 231);
+  outline: 3px solid rgb(29, 100, 231);
   box-shadow: 1px 5px 8px 2px rgba(0, 0, 0, 0.164);
 }
 

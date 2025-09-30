@@ -95,7 +95,7 @@
   text-decoration: none;
   border: none;
   color: silver;
-  box-shadow: #d3dad9d7 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -109,11 +109,10 @@
   &:hover {
     width: 100%;
     cursor: pointer;
-    // color: #1af9b3;
-    transform: scaleX(0.95);
-    background-color: whitesmoke;
-    color: #131212;
-    box-shadow: rgba(0, 0, 0, 0.493) 0px 4px 12px;
-    // box-shadow: #000000 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+    // transform: translateY(+1px);
+    transform: scale(0.95);
+    background-color: silver;
+    color: #278d7e;
+    box-shadow: #278d7e 0px 0px 0px 3px;
   }
 }
