@@ -1,0 +1,5 @@
+python utils/ingest.py
+
+
+  del data\*.txt
+  Remove-Item -Recurse -Force vectorstore
