@@ -146,6 +146,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../sass/screens/homeScreen.scss";
 import { toast } from "react-toastify";
+import Modal from "../components/Reusable/Modal";
 
 // Helper function to format duration
 const formatDuration = (seconds) => {
@@ -158,6 +159,11 @@ const formatDuration = (seconds) => {
 const HomeScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [semester, setSemester] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  // State for Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [courseToDelete, setCourseToDelete] = useState(null);
 
   let role = "Student"; // Default role
   if (userInfo) {
@@ -173,23 +179,24 @@ const HomeScreen = () => {
     data: filteredCourses,
     isLoading,
     error,
-  } = useGetCoursesQuery({ semester });
+  } = useGetCoursesQuery({ semester, keyword });
+
   // Gets the total list of courses to check if the filter should be displayed
   const { data: allCourses } = useGetCoursesQuery({});
 
   const [deleteCourse, { isLoading: isDeleting }] = useDeleteCourseMutation();
 
-  const deleteHandler = async (e, id) => {
-    e.preventDefault(); // Stop the parent Link from navigating
-    if (window.confirm("Are you sure you want to delete this course?")) {
-      try {
-        await deleteCourse(id).unwrap();
-        toast.success("Course deleted");
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
-  };
+  // const deleteHandler = async (e, id) => {
+  //   e.preventDefault(); // Stop the parent Link from navigating
+  //   if (window.confirm("Are you sure you want to delete this course?")) {
+  //     try {
+  //       await deleteCourse(id).unwrap();
+  //       toast.success("Course deleted");
+  //     } catch (err) {
+  //       toast.error(err?.data?.message || err.error);
+  //     }
+  //   }
+  // };
   function capitalizeFirstLetter(string) {
     if (!string) {
       // Handle empty or null strings
@@ -197,6 +204,30 @@ const HomeScreen = () => {
     }
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  // Modal Deletion
+
+  // for MODAL Component
+  const confirmDeleteHandler = async () => {
+    if (courseToDelete) {
+      try {
+        await deleteCourse(courseToDelete).unwrap();
+        toast.success("Course deleted successfully");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      } finally {
+        setIsModalOpen(false); // Close the modal
+        setCourseToDelete(null); // Reset the state
+      }
+    }
+  };
+  // Modal Logic
+  const handleDeleteClick = (e, courseId) => {
+    e.preventDefault(); // Stop the parent Link from navigating
+    setCourseToDelete(courseId); // Store the ID of the course to delete
+    setIsModalOpen(true); // Open the confirmation modal
+  };
+
   return (
     <>
       <Header />
@@ -242,7 +273,14 @@ const HomeScreen = () => {
               </div>
             )}
           </div>
-
+          <div className="video__search">
+            <input
+              type="text"
+              placeholder="Search"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </div>
           <div className="video__div">
             {isLoading ? (
               <p>Loading...</p>
@@ -254,9 +292,7 @@ const HomeScreen = () => {
               <div className="video__list">
                 {filteredCourses.map((course) => (
                   <React.Fragment key={course._id}>
-                    {/* The buttons are now siblings to the link, not inside it */}
                     <div className="course-card">
-                      {/* The link now only wraps the content, not the buttons */}
                       <Link
                         to={`/video/${course._id}`}
                         className="course-card-link"
@@ -264,16 +300,20 @@ const HomeScreen = () => {
                         <div className="video__list__inner">
                           <img src={course.thumbnail} alt={course.name} />
                           <div className="video__list__inner__details">
-                            <div className="split">
-                              {/* <h4>Subject</h4> */}
-                              <span>{course.name}</span>
-                            </div>
-                            <div className="split">
-                              {/* <h4>Topic</h4> */}
+                            <div className="video__list__inner__details__topic">
                               <span>{course.topic}</span>
                             </div>
+                            <div>
+                              <div className="course__name">
+                                <span>{course.name}</span>
+                              </div>
+                              {course.user && (
+                                <div className="course__teacher">
+                                  Prof. {course.user.name}
+                                </div>
+                              )}
+                            </div>
                           </div>
-
                           <p className="duration">
                             {formatDuration(course.duration)}
                           </p>
@@ -281,14 +321,14 @@ const HomeScreen = () => {
                       </Link>
                       {userInfo &&
                         userInfo.isTeacher &&
-                        userInfo._id === course.user && (
+                        userInfo._id === course.user._id && ( // login user.id = course created person
                           <div className="course-card-actions">
                             <Link to={`/edit-course/${course._id}`}>
                               <button className="btn-edit">Edit</button>
                             </Link>
                             <button
                               className="btn-delete"
-                              onClick={(e) => deleteHandler(e, course._id)}
+                              onClick={(e) => handleDeleteClick(e, course._id)}
                               disabled={isDeleting}
                             >
                               Delete
@@ -299,43 +339,6 @@ const HomeScreen = () => {
                   </React.Fragment>
                 ))}
               </div>
-
-              // <div className="video__list">
-              //   {filteredCourses.map((course) => (
-              //     <div className="course-card" key={course._id}>
-              //       {/* The link now only wraps the content, not the buttons */}
-              //       <Link
-              //         to={`/video/${course._id}`}
-              //         className="course-card-link"
-              //       >
-              //         <div className="video__list__inner">
-              //           <img src={course.thumbnail} alt={course.name} />
-              //           <h4>Subject: {course.name}</h4>
-              //           <p>Topic: {course.topic}</p>
-              //           <p>Duration: {formatDuration(course.duration)}</p>
-              //         </div>
-              //       </Link>
-
-              //       {/* The buttons are now siblings to the link, not inside it */}
-              //       {userInfo &&
-              //         userInfo.isTeacher &&
-              //         userInfo._id === course.user && (
-              //           <div className="course-card-actions">
-              //             <Link to={`/edit-course/${course._id}`}>
-              //               <button className="btn-edit">Edit</button>
-              //             </Link>
-              //             <button
-              //               className="btn-delete"
-              //               onClick={(e) => deleteHandler(e, course._id)}
-              //               disabled={isDeleting}
-              //             >
-              //               Delete
-              //             </button>
-              //           </div>
-              //         )}
-              //     </div>
-              //   ))}
-              // </div>
             )}
             {/* Intelligent "empty" messages */}
             {filteredCourses &&
@@ -355,6 +358,30 @@ const HomeScreen = () => {
         </div>
       </div>
       <Footer />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="modal-content-custom">
+          <h2>Confirm Deletion</h2>
+          <p>
+            Are you sure you want to permanently delete this course? This action
+            cannot be undone.
+          </p>
+          <div className="modal-actions">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={confirmDeleteHandler}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

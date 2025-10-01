@@ -1,103 +1,127 @@
-// import ReactPlayer from "react-player"; // More optimized import for YouTube
-// import Header from "../components/Header";
-// import Footer from "../components/Footer";
-// import "../sass/screens/videoScreen.scss";
-
-// export default function VideoScreen() {
-//   // A known-working public YouTube URL for testing
-//   const videoUrl = "https://www.youtube.com/watch?v=LXb3EKWsInQ";
-
-//   return (
-//     <div className="videoScreen">
-//       <Header />
-//       <div className="video_current">Currently Playing: Test Video</div>
-//       <div className="videoScreen_inner">
-//         <div className="videoScreen_video">
-//           <ReactPlayer
-//             className="react-player"
-//             src="https://www.youtube.com/watch?v=LXb3EKWsInQ"
-//             width="70%"
-//             height="70%"
-//             controls={true}
-//             playing={false}
-//             muted={true}
-//             onError={(e) => console.error("onError", e)}
-//           />
-//         </div>
-//         {/* <div className="chatBot">ChatBot Here</div> */}
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import ReactPlayer from "react-player";
-import { useGetCourseDetailsQuery } from "../store/slices/coursesApiSlice";
+import {
+  useGetCourseDetailsQuery,
+  useGetCoursesQuery, // 1. Import the hook to get all courses
+} from "../store/slices/coursesApiSlice";
+import "../sass/screens/videoScreen.scss";
+import { MediaController } from "media-chrome/react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "../sass/screens/videoScreen.scss";
 
 const VideoScreen = () => {
-  // 1. Get the course ID from the URL (e.g., /video/61ba42...)
   const { id: courseId } = useParams();
 
-  // 2. Fetch the course data using the ID from Redux Toolkit Query
-  const { data: course, isLoading, error } = useGetCourseDetailsQuery(courseId);
+  // Fetch details for the current video
+  const { data: currentCourse, isLoading: isLoadingCurrent } =
+    useGetCourseDetailsQuery(courseId);
 
-  // 3. Helper function to add Cloudinary optimization parameters to the video URL
+  // Fetch the list of ALL courses
+  const { data: allCourses, isLoading: isLoadingList } = useGetCoursesQuery({});
+
   const getOptimizedVideoUrl = (originalUrl) => {
-    if (!originalUrl) return "";
-    // Split the URL at '/upload/'
+    if (!originalUrl || !originalUrl.includes("cloudinary")) {
+      return originalUrl;
+    }
     const parts = originalUrl.split("/upload/");
-    // Insert optimization parameters (q_auto:good for quality, f_auto for format)
     return `${parts[0]}/upload/q_auto:good/f_auto/${parts[1]}`;
   };
 
+  // Filter the list to exclude the current video
+  const otherCourses = allCourses?.filter(
+    (course) => course._id !== currentCourse?._id
+  );
+
+  const formatDuration = (seconds) => {
+    if (isNaN(seconds)) return "N/A";
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs.toString().padStart(2, "0")}`;
+  };
   return (
     <>
       <Header />
-      <div className="videoScreen__container">
-        {isLoading ? (
-          <p>Loading video...</p>
-        ) : error ? (
-          <p style={{ color: "red" }}>{error?.data?.message || error.error}</p>
-        ) : course ? (
-          // If course data is found, display the video and details
-          <>
-            <h1 className="video-title">{course.name}</h1>
-            <div className="video-player-wrapper">
-              <ReactPlayer
-                className="react-player"
-                src={getOptimizedVideoUrl(course.videoUrl)}
-                controls={true}
-                // Optionally start playing immediately or muted
-                playing={false}
-                muted={false}
-              />
+      <div className="video-screen">
+        <div className="video-screen__layout">
+          {/* --- Main Content (Video Player & Details) --- */}
+          <div className="video-screen__main">
+            {isLoadingCurrent ? (
+              <p>Loading...</p>
+            ) : currentCourse ? (
+              <>
+                <div className="video-player__wrapper">
+                  <MediaController
+                    style={{
+                      width: "100%",
+                      aspectRatio: "16/9",
+                    }}
+                  >
+                    <ReactPlayer
+                      className="react-player"
+                      src={getOptimizedVideoUrl(currentCourse.videoUrl)}
+                      width="100%"
+                      height="100%"
+                      controls={true}
+                      playing={false}
+                    />
+                  </MediaController>
+                </div>
+                <div className="video-details__header">
+                  {currentCourse.name}
+                  {currentCourse.user && (
+                    <div className="course__teacher">
+                      Prof. {currentCourse.user.name}
+                    </div>
+                  )}
+                </div>
+                <div className="video-details">
+                  <p style={{ fontSize: "2rem" }}>{currentCourse.topic}</p>
+                  <p style={{ fontSize: "1.1rem" }}>
+                    {currentCourse.description}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p>Video not found.</p>
+            )}
+          </div>
+
+          {/* --- Sidebar --- */}
+          <aside className="video-screen__sidebar">
+            <h3 className="sidebar__title">More Videos</h3>
+            <div className="sidebar__list">
+              {isLoadingList ? (
+                <p>Loading list...</p>
+              ) : (
+                otherCourses?.map((course) => (
+                  <Link
+                    to={`/video/${course._id}`}
+                    key={course._id}
+                    className="sidebar-item"
+                  >
+                    <img
+                      src={course.thumbnail}
+                      alt={course.name}
+                      className="sidebar-item__thumbnail"
+                    />
+                    <div className="sidebar-item__details">
+                      <h4 className="sidebar-item__topic">{course.topic}</h4>
+                      <p className="sidebar-item__title">{course.name}</p>
+                      {course.user && (
+                        <div className="sidebar-item__teacher">
+                          Prof. {course.user.name}
+                        </div>
+                      )}
+                    </div>
+                    <p className="duration__pre">
+                      {formatDuration(course.duration)}
+                    </p>
+                  </Link>
+                ))
+              )}
             </div>
-            <div className="video-details">
-              <h2>Topic: {course.topic}</h2>
-              <p>
-                <strong>Semester:</strong> {course.semester}
-              </p>
-              <p>
-                <strong>Description:</strong> {course.description}
-              </p>
-              <p>
-                <strong>Duration:</strong>{" "}
-                {course.duration
-                  ? `${Math.floor(course.duration / 60)}m ${Math.floor(
-                      course.duration % 60
-                    )}s`
-                  : "N/A"}
-              </p>
-            </div>
-          </>
-        ) : (
-          // If no course is found for the ID
-          <p>Course not found.</p>
-        )}
+          </aside>
+        </div>
       </div>
       <Footer />
     </>

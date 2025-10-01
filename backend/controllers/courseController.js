@@ -6,23 +6,29 @@ import cloudinary from "../config/cloudinary.js";
 // @route   GET /api/courses
 // @access  Private
 const getCourses = asyncHandler(async (req, res) => {
-  // Start with an empty filter object
+  const { semester, keyword } = req.query;
   const filter = {};
 
   // If a semester is provided in the query string (e.g., /api/courses?semester=2), add it to the filter
   if (req.query.semester) {
     filter.semester = req.query.semester;
   }
-
   // Check if the logged-in user is a teacher
   if (req.user.isTeacher) {
     // If they are a teacher, add a filter to only find their own courses
     filter.user = req.user._id;
   }
 
-  // Use the final filter object to find courses
-  const courses = await Course.find(filter);
-
+  if (keyword) {
+    // Use MongoDB's $or operator to search in multiple fields
+    // Use $regex for partial, case-insensitive matching
+    filter.$or = [
+      { name: { $regex: keyword, $options: "i" } },
+      { topic: { $regex: keyword, $options: "i" } },
+    ];
+  }
+  // const courses = await Course.find(filter);
+  const courses = await Course.find(filter).populate("user", "name"); // also add teacher name when getting this
   res.json(courses);
 });
 
@@ -30,7 +36,7 @@ const getCourses = asyncHandler(async (req, res) => {
 // @route   GET /api/courses/:id
 // @access  Public
 const getCourseById = asyncHandler(async (req, res) => {
-  const course = await Course.findById(req.params.id);
+  const course = await Course.findById(req.params.id).populate("user", "name");
 
   if (course) {
     res.json(course);
@@ -39,8 +45,6 @@ const getCourseById = asyncHandler(async (req, res) => {
     throw new Error("Course not found");
   }
 });
-
-// --- KEEP THE EXISTING FUNCTION ---
 
 // @desc    Create a new course
 // @route   POST /api/courses
