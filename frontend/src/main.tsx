@@ -9,7 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import LandingPage from "./screen/LandingPage";
+import LoginScreen from "./screen/util/Login";
 import Register from "./screen/util/Register";
 import HomeScreen from "./screen/HomeScreen";
 import VideoScreen from "./screen/VideoScreen";
@@ -37,7 +37,7 @@ const route = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<App />} />
-      <Route index={true} path="" element={<LandingPage />} />
+      <Route index={true} path="" element={<LoginScreen />} />
       <Route path="/register" element={<Register />} />
 
       {/* <Route path="" element={<PrivateRoute />}> */}

@@ -1,4 +1,5 @@
 @use "../util/" as ut;
+@use "../global/typography" as tp;
 
 .profile {
   color: silver;
@@ -15,10 +16,10 @@
     border-radius: 30px;
     padding: 10px;
     box-shadow: #77928e 0px 0px 0px 2px inset,
-      rgb(14, 14, 14) 10px -10px 0px -3px, #278d7e 10px -10px,
+      rgb(14, 14, 14) 10px -10px 0px -3px, tp.$dimButtonColor 10px -10px,
       rgb(14, 14, 14) 20px -20px 0px -3px, #979999 20px -20px,
       rgb(14, 14, 14) 30px -30px 0px -3px;
-    transition: all 0.5s;
+    transition: all 0.6s ease-in-out;
     @include ut.breakpoint(larger) {
       width: 350px;
     }
@@ -29,9 +30,10 @@
       width: fit-content;
       margin-right: 20px;
     }
+
     &:hover {
       box-shadow: #e6ebea 0px 0px 0px 2px inset,
-        rgb(14, 14, 14) 10px -10px 0px -3px, #36ceb7 10px -10px,
+        rgb(14, 14, 14) 10px -10px 0px -3px, tp.$buttonColor 10px -10px,
         rgb(14, 14, 14) 20px -20px 0px -3px, #cbe4e4 20px -20px,
         rgb(14, 14, 14) 30px -30px 0px -3px;
     }
@@ -39,7 +41,7 @@
   &__title {
     text-align: center;
     font-size: 3rem;
-    color: #278d7e;
+    color: tp.$textColor;
   }
 }
 .profile {
@@ -136,9 +138,9 @@
   padding: 10px 0;
   background-color: rgb(14, 14, 14);
   text-decoration: none;
-  color: #278d7e;
+  color: tp.$textColor;
   border: none;
-  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: tp.$textColor 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -155,8 +157,8 @@
     // color: #1af9b3;
     transform: scale(0.95);
     background-color: silver;
-    color: #278d7e;
-    box-shadow: #278d7e 0px 0px 0px 3px;
+    color: tp.$textColor;
+    box-shadow: tp.$textColor 0px 0px 0px 3px;
   }
 }
 

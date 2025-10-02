@@ -47,6 +47,15 @@ const EditCourseScreen = () => {
     }
   };
 
+  // Handler for semester input validation
+  const handleSemesterChange = (e) => {
+    const value = e.target.value;
+    // Regex allows an empty string or a single digit from 1 to 4
+    if (/^[1-4]?$/.test(value)) {
+      setSemester(value);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -79,7 +88,9 @@ const EditCourseScreen = () => {
                     type="text"
                     placeholder="Enter semester"
                     value={semester}
-                    onChange={(e) => setSemester(e.target.value)}
+                    onChange={handleSemesterChange}
+                    inputMode="numeric"
+                    pattern="[1-4]"
                   />
                 </div>
 

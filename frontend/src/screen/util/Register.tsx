@@ -76,15 +76,17 @@ const RegisterScreen = () => {
 
   return (
     <div className="register">
-      <div className="landing__image"></div>
+      <div className="landing__image">
+        <video autoPlay loop muted playsInline className="background-video">
+          <source src="/src/assets/vid2.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div className="register__main">
         <div className="register__inner">
           <div className="register__inner__header">
-            <div className="register__inner__header__topHeader">
-              Platform Name
-            </div>
+            <div className="register__inner__header__topHeader">Axium</div>
             <div className="register__inner__header__bottomHeader">
-              Register to the platform
+              Register to the world of Axium!
             </div>
           </div>
         </div>

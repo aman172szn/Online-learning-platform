@@ -52,6 +52,48 @@ export default function UploadYoutubeScreen() {
     }
   };
 
+  // Handler for semester input validation
+  const handleSemesterChange = (e) => {
+    const value = e.target.value;
+    // Regex allows an empty string or a single digit from 1 to 4
+    if (/^[1-4]?$/.test(value)) {
+      setSemester(value);
+    }
+  };
+
+  const handleDurationChange = (e) => {
+    let value = e.target.value;
+
+    // 1. Remove any characters that are not digits or a colon.
+    value = value.replace(/[^0-9:]/g, "");
+
+    // 2. Find the first colon to split minutes and seconds.
+    const firstColonIndex = value.indexOf(":");
+
+    if (firstColonIndex !== -1) {
+      const minutes = value.substring(0, firstColonIndex);
+      // Remove any additional colons from the seconds part.
+      let seconds = value.substring(firstColonIndex + 1).replace(/:/g, "");
+
+      // 3. Validate the seconds part.
+      if (seconds) {
+        // Limit seconds to a maximum of 2 digits.
+        if (seconds.length > 2) {
+          seconds = seconds.substring(0, 2);
+        }
+        // If the user types a number >= 60 (e.g., "60" or "75"),
+        // we only keep the first digit to prevent an invalid state.
+        if (parseInt(seconds, 10) >= 60) {
+          seconds = seconds.substring(0, 1);
+        }
+      }
+      // Reconstruct the value with the validated parts.
+      value = `${minutes}:${seconds}`;
+    }
+
+    setDuration(value);
+  };
+
   return (
     <>
       <Header />
@@ -79,7 +121,7 @@ export default function UploadYoutubeScreen() {
                   name="semester"
                   required
                   placeholder="Enter Semester"
-                  onChange={(e) => setSemester(e.target.value)}
+                  onChange={handleSemesterChange}
                 />
               </div>
               <div className="upload__video__form__courseTopic">
@@ -127,7 +169,8 @@ export default function UploadYoutubeScreen() {
                   type="text"
                   name="duration"
                   placeholder="e.g: 10:35"
-                  onChange={(e) => setDuration(e.target.value)}
+                  inputMode="decimal" //  for mobile users shows numeric-style keyboard
+                  onChange={handleDurationChange}
                 />
               </div>
 

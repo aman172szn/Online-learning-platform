@@ -1,4 +1,6 @@
 @use "../util/" as ut;
+@use "../global/typography" as tp;
+
 // @include ut.breakpoint(medium) {
 // }
 
@@ -23,7 +25,7 @@
       font-weight: bold;
       border-radius: 10px;
       // color: rgb(103 155 145);
-      color: #278d7e;
+      color: tp.$textColor;
     }
     span:last-of-type {
       font-size: 1rem;
@@ -36,8 +38,7 @@
       border-radius: 10px;
       color: #131212;
       background-color: silver;
-      // color: #278d7e;
-      box-shadow: #278d7e 0px 0px 0px 3px;
+      box-shadow: tp.$textColor 0px 0px 0px 3px;
     }
   }
   &__video {
@@ -64,7 +65,7 @@
     border: none;
     font-size: 1.1rem;
     background-color: #131212;
-    color: #278d7e;
+    color: tp.$textColor;
     border: 2px solid rgba(253, 253, 253, 0.226);
     &::placeholder {
       color: silver;
@@ -82,7 +83,7 @@
 }
 
 .filter-container {
-  color: #278d7e;
+  color: tp.$textColor;
   select {
     background-color: rgb(14, 14, 14);
     // color: silver;
@@ -90,8 +91,12 @@
     font-family: cursive;
     border-radius: 10px;
     cursor: pointer;
-    color: #278d7e;
+    color: tp.$textColor;
   }
+}
+select option:hover {
+  background-color: #5a00e0; /* Your desired purple color */
+  color: #ffffff;
 }
 
 .video__div {
@@ -167,7 +172,7 @@
   padding: 1rem;
   &__topic {
     font-size: 2rem;
-    color: #278d7e;
+    color: tp.$textColor;
     text-align: center;
   }
 }
@@ -177,7 +182,7 @@
   // flex-direction: column;
   // align-items: center;
   font-size: 2rem;
-  color: #278d7e;
+  color: tp.$textColor;
   &.split:last-child {
     color: silver;
     font-size: 1.2rem !important;
@@ -187,10 +192,10 @@
 }
 .duration {
   position: absolute;
-  bottom: 8rem;
+  bottom: 9.2rem;
   right: 0;
   margin-right: 10px;
-  background-color: #278d7e;
+  background-color: tp.$textColor;
   border-radius: 10px;
   padding: 3px;
   font-size: 1rem;
@@ -231,8 +236,8 @@
   transition: all 0.6s;
   &:hover {
     cursor: pointer;
-    color: #278d7e;
-    border: 2px solid #278d7e;
+    color: tp.$textColor;
+    border: 2px solid tp.$textColor;
   }
 }
 
@@ -246,7 +251,7 @@
   background-color: rgb(14, 14, 14);
   // box-shadow: #d8d8d8 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   text-decoration: overline;
-  color: #278d7e;
+  color: tp.$textColor;
   height: 300px;
 }
 
@@ -263,8 +268,8 @@
   padding: 10px 0;
   background-color: rgb(14, 14, 14);
   text-decoration: none;
-  color: #278d7e;
-  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  color: tp.$textColor;
+  box-shadow: tp.$textColor 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -286,8 +291,8 @@
     // color: #1af9b3;
     transform: scaleX(0.9);
     background-color: silver;
-    color: #278d7e;
-    box-shadow: #278d7e 0px 0px 0px 3px;
+    color: tp.$textColor;
+    box-shadow: tp.$textColor 0px 0px 0px 3px;
   }
 }
 h4 {
@@ -299,5 +304,5 @@ h4 {
 }
 
 .course__teacher {
-  font-size: 1rem;
+  font-size: rem;
 }

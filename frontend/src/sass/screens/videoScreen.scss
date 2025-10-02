@@ -1,39 +1,4 @@
-// .videoScreen__container {
-//   display: flex;
-//   flex-direction: column;
-//   background-color: #131212;
-//   color: silver;
-//   min-height: calc(100vh - 91px); // Adjust based on your header/footer height
-
-//   .video_current {
-//     text-align: center;
-//     font-size: 1.2rem;
-//     margin: 10px 0;
-//   }
-
-//   .videoScreen_inner {
-//     flex: 1;
-//     display: flex;
-//     gap: 1rem;
-//     padding: 10px;
-
-//     .videoScreen_video {
-//       flex: 3;
-//       // background: #000;
-//       display: flex;
-//       justify-content: center;
-//       border-radius: 12px;
-//       overflow: hidden;
-//     }
-
-//     .chatBot {
-//       flex: 1;
-//       background: #f5f5f5;
-//       border-radius: 12px;
-//       padding: 10px;
-//     }
-//   }
-// }
+@use "../global/typography" as tp;
 
 .video-screen {
   // background-color: #1a1a1a;
@@ -66,7 +31,7 @@
 
   &__header {
     font-size: 4rem;
-    color: #278d7e;
+    color: tp.$textColor;
     margin: 20px 0;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #444;
@@ -111,7 +76,7 @@
 
 .sidebar__title {
   font-size: 1.5rem;
-  color: #278d7e;
+  color: tp.$textColor;
   margin-top: 0;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #444;
@@ -129,14 +94,15 @@
   position: relative;
   gap: 0.75rem;
   text-decoration: none;
-  color: #f0f0f0;
-  background-color: #333;
+  color: silver;
+  // background-color: #333;
+  background-color: #0e0e0e;
   padding: 0.5rem;
   border-radius: 5px;
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #444;
+    background-color: #202020;
   }
 
   &__thumbnail {
@@ -152,7 +118,7 @@
   &__topic {
     margin: 0;
     font-size: 1.1rem;
-    color: #278d7e;
+    color: tp.$textColor;
   }
 
   &__title {
@@ -173,13 +139,14 @@
 
 .course__teacher {
   color: silver;
+  font-size: 1.5rem;
 }
 .duration__pre {
   position: absolute;
   top: 3.8rem;
   left: 4.2rem;
   margin-right: 10px;
-  background-color: #278d7e;
+  background-color: tp.$textColor;
   border-radius: 10px;
   padding: 3px;
   font-size: 0.7rem;

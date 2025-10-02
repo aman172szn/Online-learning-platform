@@ -355,9 +355,19 @@ export default function UploadFileScreen() {
 
   const isLoading = isCreating || isUploadingThumb || isUploadingVideo;
 
+  // Handler for semester input validation
+  const handleSemesterChange = (e) => {
+    const value = e.target.value;
+    // Regex allows an empty string or a single digit from 1 to 4
+    if (/^[1-4]?$/.test(value)) {
+      setSemester(value);
+    }
+  };
+
   return (
     <>
       <Header />
+
       {/* <button
         onClick={() => setIsModalOpen(!isModalOpen)}
         style={{
@@ -369,6 +379,7 @@ export default function UploadFileScreen() {
       >
         Toggle Test Modal
       </button> */}
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="upload-progress-modal-content">
           <div className="spinner"></div>
@@ -401,7 +412,7 @@ export default function UploadFileScreen() {
                   name="semester"
                   required
                   placeholder="Enter Semester"
-                  onChange={(e) => setSemester(e.target.value)}
+                  onChange={handleSemesterChange}
                 />
               </div>
               <div className="upload__video__form__courseTopic">

@@ -1,10 +1,14 @@
+@use "../../global/typography" as tp;
+@use "../../util/" as ut;
+
 .register {
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   background-color: rgb(14, 14, 14);
-  border-radius: 10px;
-  box-shadow: 2px 0px 5px 2px rgba(255, 254, 254, 0.2);
   color: silver;
+  @include ut.breakpoint(medium) {
+    flex-direction: column;
+  }
 }
 
 .register__main {
@@ -13,14 +17,20 @@
   flex-direction: column;
   align-content: center;
   padding-left: 3rem;
-  /* margin-top: auto; */
+  // /* margin-top: auto; */
   margin-bottom: 10%;
+  @include ut.breakpoint(medium) {
+    width: 100%;
+  }
 }
 
 .register {
   width: 100%;
   &__inner {
     margin-top: 3rem;
+    @include ut.breakpoint(large) {
+      margin-top: 0rem;
+    }
     &__header {
       &__topHeader {
         font-weight: bold;
@@ -29,27 +39,32 @@
       &__bottomHeader {
         font-size: 1.2rem;
         font-style: italic;
-        color: #278d7e;
+        color: tp.$textColor;
         margin-bottom: 5px;
       }
     }
   }
   &__form {
-    margin-top: auto;
-    border-radius: 10px;
-    box-shadow: 2px 0px 5px 2px rgba(255, 254, 254, 0.2);
+    // margin-top: auto;
+    // box-shadow: 2px 0px 5px 2px rgba(255, 254, 254, 0.2);
+    // border-radius: 10px;
     min-width: 250px;
     max-width: 850px;
     width: 90%;
     // margin: 10px auto;
     padding: 20px;
-    font-size: 2rem;
-    // height: 70%;
+    padding-left: 0;
+    border-bottom: 1px solid #474040;
+
     > form {
       height: 100%;
       display: flex;
       // gap: 10px;
       flex-direction: column;
+      font-size: 2rem !important;
+      @include ut.breakpoint(large) {
+        font-size: 1.5rem !important;
+      }
     }
     input {
       font-size: 1rem;
@@ -71,7 +86,7 @@
     // display: flex;
     font-size: 1.2rem;
     a {
-      color: #278d7e;
+      color: tp.$textColor;
     }
   }
 }
@@ -107,7 +122,7 @@
   text-decoration: none;
   border: none;
   color: silver;
-  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: tp.$textColor 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -118,13 +133,14 @@
   transition: all 0.6s ease-in-out;
   flex-grow: 1;
   font-family: cursive;
+
   &:hover {
     width: 100%;
     cursor: pointer;
     transform: scale(0.95);
     background-color: silver;
-    color: #278d7e;
-    box-shadow: #278d7e 0px 0px 0px 3px;
+    color: tp.$textColor;
+    box-shadow: tp.$textColor 0px 0px 0px 3px;
   }
 }
 

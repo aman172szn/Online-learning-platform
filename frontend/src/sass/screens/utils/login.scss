@@ -1,27 +1,69 @@
 @use "../../global/headerPlate" as hp;
+@use "../../global/typography" as tp;
+@use "../../util/" as ut;
+
 .login {
-  background-color: rg(14, 14, 14);
-  border-radius: 10px;
-  box-shadow: 2px 0px 5px 2px rgba(255, 254, 254, 0.2);
+  // --------------------Do not delete---------------------------
+  // background-color: #000000ab;
+
+  // --------------------Do not delete---------------------------
+  // background-color: rgb(22 21 21 / 67%);
+  // border-radius: 10px;
+  // box-shadow: 2px 0px 5px 2px rgba(255, 254, 254, 0.2);
+  // height: 45%;
+
   min-width: 250px;
   max-width: 850px;
   width: 90%;
-  // margin: 10px auto;
   padding: 20px;
   padding-top: 30px;
-  height: 45%;
-  // margin-top: 30%;
+  z-index: 1;
+  border-bottom: 1px solid #474040;
   > form {
     height: 100%;
     color: silver;
   }
+  @include ut.breakpoint(medium) {
+    padding: 0px;
+  }
 }
 
 .landing__image {
-  background: url(/src/assets/1.jpg) no-repeat center/cover;
-  box-shadow: 2px 0px 5px 2px rgba(0, 0, 0, 0.2);
-  width: 70%;
-  border-radius: 10px;
+  // background: url(/src/assets/1.jpg) no-repeat center/cover;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  @include ut.breakpoint(medium) {
+    height: 85vh;
+  }
+
+  .background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    @include ut.breakpoint(large) {
+      object-fit: fill;
+    }
+  }
+
+  /* overlay */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.699); // semi-transparent black
+    backdrop-filter: blur(3px); // adds a blur effect
+    @include ut.breakpoint(large) {
+      backdrop-filter: blur(2.5px);
+    }
+    @include ut.breakpoint(medium) {
+      backdrop-filter: blur(2px);
+    }
+  }
 }
 
 .login__inner {
@@ -33,7 +75,7 @@
       gap: 10px;
     }
     &__topHeader {
-      font-size: hp.$headerTopSize;
+      font-size: 3.5rem;
       font-weight: bold;
       // padding-bottom: 15px;
     }
@@ -41,8 +83,8 @@
     &__bottomHeader {
       font-style: italic;
       font-size: hp.$headerBottomSize;
-      padding-bottom: 1.2rem;
-      color: #278d7e;
+      padding-bottom: 2rem;
+      color: tp.$textColor;
     }
   }
   &__form {
@@ -72,7 +114,7 @@
       &__registerLink {
         font-size: 1.2rem;
         a {
-          color: #278d7e;
+          color: tp.$textColor;
         }
       }
     }
@@ -95,7 +137,7 @@
   text-decoration: none;
   border: none;
   color: silver;
-  box-shadow: #278d7e 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
+  box-shadow: tp.$textColor 0px 0px 5px 0px, #131212 0px 0px 1px 0px;
   font-weight: bold;
   padding: 10px;
   margin-right: 10px;
@@ -112,7 +154,59 @@
     // transform: translateY(+1px);
     transform: scale(0.95);
     background-color: silver;
-    color: #278d7e;
-    box-shadow: #278d7e 0px 0px 0px 3px;
+    color: tp.$textColor;
+    box-shadow: tp.$textColor 0px 0px 0px 3px;
   }
+}
+
+// Additional Landing Page SCSS
+
+.landingPage {
+  display: flex;
+  min-height: 100vh;
+  // background-color: #131212;
+  background-color: rgb(14, 14, 14);
+  box-shadow: 2px 0px 5px 2px rgb(255 248 248 / 38%);
+  color: silver;
+  @include ut.breakpoint(medium) {
+    flex-direction: column;
+  }
+}
+
+.landing__main {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding-left: 3rem;
+  @include ut.breakpoint(medium) {
+    width: 100%;
+  }
+
+  // --------------------Do not delete---------------------------
+  // margin-top: auto;
+  margin-bottom: 10%;
+
+  // --------------------Do not delete---------------------------
+  // z-index: 1;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+}
+
+.background-video {
+  // min-width: 100%;
+  min-height: 100%;
+  z-index: -1; /* Pushes the video behind other content */
+  // object-fit: cover;
+}
+
+/* Optional: Style for your content on top */
+.content {
+  // position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding-top: 20vh;
 }

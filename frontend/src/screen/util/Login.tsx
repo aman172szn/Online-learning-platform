@@ -134,60 +134,75 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="login">
-      <div className="login__inner">
-        <div className="login__inner__header">
-          <div className="login__inner__header__topHeader">Platform Name</div>
-          <div className="login__inner__header__bottomHeader">
-            Login to the platform
+    <div className="landingPage">
+      {/* <p>Credits</p> */}
+      <div className="landing__image">
+        <video autoPlay loop muted playsInline className="background-video">
+          <source src="/src/assets/vid2.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className="landing__main">
+        <div className="login">
+          <div className="login__inner">
+            <div className="login__inner__header">
+              <div className="login__inner__header__topHeader">Axium</div>
+              <div className="login__inner__header__bottomHeader">
+                Login to the world of Axium!
+              </div>
+            </div>
+            <div className="login__inner__form">
+              <form
+                onSubmit={submitHandler}
+                className="login__inner__form__login"
+              >
+                <div className="login__inner__form__login__email">
+                  <label htmlFor="userEmail">Email</label>
+                  <input
+                    value={email}
+                    type="email"
+                    name="userEmail"
+                    // required
+                    placeholder="Enter email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="login__inner__form__login__password">
+                  <label htmlFor="userPassword">Password</label>
+                  <input
+                    value={password}
+                    type="password"
+                    name="userPassword"
+                    // required
+                    placeholder="Enter password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="off"
+                  />
+                </div>
+
+                <div className="login__edit">
+                  <button
+                    type="submit"
+                    className="login__edit__button"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Signing In..." : "Sign In"}
+                  </button>
+                </div>
+
+                <div className="login__inner__form__login__registerLink">
+                  Don't have an account?{" "}
+                  <Link
+                    to={
+                      redirect ? `/register?redirect=${redirect}` : "/register"
+                    }
+                  >
+                    Register Now.
+                  </Link>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-        <div className="login__inner__form">
-          <form onSubmit={submitHandler} className="login__inner__form__login">
-            <div className="login__inner__form__login__email">
-              <label htmlFor="userEmail">Email</label>
-              <input
-                value={email}
-                type="email"
-                name="userEmail"
-                // required
-                placeholder="Enter email"
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="off"
-              />
-            </div>
-            <div className="login__inner__form__login__password">
-              <label htmlFor="userPassword">Password</label>
-              <input
-                value={password}
-                type="password"
-                name="userPassword"
-                // required
-                placeholder="Enter password"
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="login__edit">
-              <button
-                type="submit"
-                className="login__edit__button"
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing In..." : "Sign In"}
-              </button>
-            </div>
-
-            <div className="login__inner__form__login__registerLink">
-              New User?{" "}
-              <Link
-                to={redirect ? `/register?redirect=${redirect}` : "/register"}
-              >
-                Register Now.
-              </Link>
-            </div>
-          </form>
         </div>
       </div>
     </div>

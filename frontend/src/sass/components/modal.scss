@@ -1,3 +1,5 @@
+@use "../global/typography" as tp;
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -14,7 +16,8 @@
 }
 
 .modal-content {
-  background: linear-gradient(130deg, #0d2e2a, #141414); // Subtle gradient
+  // background: linear-gradient(130deg, #0d2e2a, #141414); // Subtle gradient
+  background: linear-gradient(130deg, #321649, #141414); // Subtle gradient
   padding: 2rem 2.5rem;
   border-radius: 15px;
   position: relative;
@@ -36,7 +39,7 @@
     width: 48px;
     height: 48px;
     border: 5px solid #444; // The track
-    border-top: 5px solid #278d7e;
+    border-top: 5px solid tp.$textColor;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
